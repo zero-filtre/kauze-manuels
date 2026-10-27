@@ -1,0 +1,2273 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Manuels utilisateur, administrateur et développeur de Kauze">
+      
+      
+      
+        <link rel="canonical" href="https://manuels.kauze.tech/developpeur/whisper.html">
+      
+      
+        <link rel="prev" href="api.html">
+      
+      
+        <link rel="next" href="frontend.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/kauze.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Services de transcription - Manuels Kauze</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#services-de-transcription" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../index.html" title="Manuels Kauze" class="md-header__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manuels Kauze
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Services de transcription
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au thème sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au thème clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Manuels Kauze" class="md-nav__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    Manuels Kauze
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuels Kauze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilisateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel utilisateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/compte.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compte et connexion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/infirmier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parcours infirmier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/actes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les actes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/enregistrer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enregistrer une consultation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/dicter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicter son rapport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/rapports.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les rapports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/editer-valider-exporter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Éditer, valider, exporter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/verrou.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Le verrou de visibilité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Questions fréquentes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administrateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administrateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel administrateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/https.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/licence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La licence machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/donnees.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Données et sauvegarde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/comptes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comptes et patients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/actes-et-prompts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actes, prompts et templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/modeles-pdf.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/exploitation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/depannage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Développeur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Développeur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel développeur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vue-ensemble.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contrats API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services de transcription
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="whisper.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services de transcription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whisper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Whisper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametres-de-decodage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paramètres de décodage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versions-epinglees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions épinglées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construction-et-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construction et tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qwen3-asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qwen3-ASR
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qwen3-ASR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cote-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Côté backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-le-moteur-est-nomme-mais-au-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand le moteur est nommé mais au repos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pourquoi-le-paquet-qwen-asr-et-non-transformers-seul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi le paquet qwen-asr et non transformers seul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versions-epinglees_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions épinglées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poids-de-limage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poids de l'image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram-et-la-place-qui-reste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VRAM, et la place qui reste
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construction-et-tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construction et tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="frontend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deploiement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Déploiement, certificat et machine hôte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests et intégration continue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="regles-metier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Règles métier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scripts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="documentation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La documentation elle-même
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whisper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Whisper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametres-de-decodage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paramètres de décodage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versions-epinglees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions épinglées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construction-et-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construction et tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qwen3-asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qwen3-ASR
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qwen3-ASR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cote-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Côté backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-le-moteur-est-nomme-mais-au-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand le moteur est nommé mais au repos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pourquoi-le-paquet-qwen-asr-et-non-transformers-seul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi le paquet qwen-asr et non transformers seul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versions-epinglees_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versions épinglées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poids-de-limage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poids de l'image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram-et-la-place-qui-reste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VRAM, et la place qui reste
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construction-et-tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construction et tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="services-de-transcription">Services de transcription<a class="headerlink" href="#services-de-transcription" title="Permanent link">&para;</a></h1>
+<p>Deux moteurs, une seule interface. Le médecin a tranché le 11/10/2026 : <strong>Qwen3-ASR pour les
+actes dictés</strong>, où le lexique du praticien domine, <strong>Whisper pour les actes interactifs</strong>, où
+l'accent et l'articulation du patient pèsent davantage. Les deux servent la même route
+compatible OpenAI, chacun sur son port : le backend bascule d'un moteur à l'autre en changeant
+une URL, sans rien savoir du moteur qui répond.</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Port</th>
+<th>Moteur</th>
+<th>Démarre par défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>whisper</code></td>
+<td>8999</td>
+<td>faster-whisper large-v3</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>qwen-asr</code></td>
+<td>8998</td>
+<td>Qwen3-ASR-1.7B</td>
+<td>non, profil <code>qwen</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="whisper">Whisper<a class="headerlink" href="#whisper" title="Permanent link">&para;</a></h2>
+<p>Un serveur FastAPI qui expose faster-whisper avec une interface compatible OpenAI.</p>
+<h3 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Chemin</th>
+<th>But</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/</code></td>
+<td>Informations sur le modèle chargé.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/health</code></td>
+<td>Sonde utilisée par le healthcheck Docker.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/audio/transcriptions</code></td>
+<td>Transcription. Multipart avec <code>file</code>, plus <code>model</code> ignoré, <code>language</code> à <code>fr</code> par défaut, <code>response_format</code> parmi <code>json</code>, <code>text</code> et <code>verbose_json</code>, et <code>temperature</code> à zéro.</td>
+</tr>
+</tbody>
+</table>
+<p>La réponse au format <code>json</code> ne contient que la clé <code>text</code>. Le backend n'en lit rien d'autre.</p>
+<p>Côté backend, <code>WhisperClientImpl</code> se déclare comme le moteur de transcription nommé <code>whisper</code> :
+c'est la valeur attendue par les variables <code>ASR_LIVE_PROVIDER</code> et <code>ASR_DICTATED_PROVIDER</code>, qui
+choisissent le moteur de chaque piste, voir
+<a href="configuration.html#moteurs-de-transcription">Configuration</a>.</p>
+<h3 id="parametres-de-decodage">Paramètres de décodage<a class="headerlink" href="#parametres-de-decodage" title="Permanent link">&para;</a></h3>
+<p>Le modèle est chargé au démarrage, d'après <code>WHISPER_MODEL</code>, avec détection automatique du
+matériel et du type de calcul. Le décodage utilise une recherche en faisceau de largeur cinq,
+un filtre d'activité vocale avec un seuil de 0,5, une parole minimale de 250 millisecondes et
+un silence minimal de 2 secondes, sans conditionnement sur le texte précédent.</p>
+<p>Ces valeurs ont un effet direct sur la qualité des portions courtes. Toute modification doit
+être mesurée avec le banc d'essai de transcription, pas jugée à l'oreille sur un fichier.</p>
+<h3 id="versions-epinglees">Versions épinglées<a class="headerlink" href="#versions-epinglees" title="Permanent link">&para;</a></h3>
+<p>Les deux listes de dépendances épinglent leurs versions avec <code>==</code>, sans quoi une reconstruction
+installe en silence un autre jeu de versions et le banc de performance mesuré avant la livraison
+ne dit plus rien de ce qui tourne sur la machine.</p>
+<table>
+<thead>
+<tr>
+<th>Paquet</th>
+<th>Version</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>faster-whisper</code></td>
+<td>1.2.1</td>
+<td>Dockerfile</td>
+</tr>
+<tr>
+<td><code>ctranslate2</code></td>
+<td>4.8.3</td>
+<td>Dockerfile</td>
+</tr>
+<tr>
+<td><code>fastapi</code></td>
+<td>0.143.0</td>
+<td>Dockerfile et <code>requirements-test.txt</code></td>
+</tr>
+<tr>
+<td><code>uvicorn[standard]</code></td>
+<td>0.54.0</td>
+<td>Dockerfile</td>
+</tr>
+<tr>
+<td><code>python-multipart</code></td>
+<td>0.0.32</td>
+<td>Dockerfile et <code>requirements-test.txt</code></td>
+</tr>
+<tr>
+<td><code>pytest</code></td>
+<td>9.1.1</td>
+<td><code>requirements-test.txt</code></td>
+</tr>
+<tr>
+<td><code>pytest-asyncio</code></td>
+<td>1.4.0</td>
+<td><code>requirements-test.txt</code></td>
+</tr>
+<tr>
+<td><code>httpx</code></td>
+<td>0.28.1</td>
+<td><code>requirements-test.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>ctranslate2</code> est épinglée explicitement bien qu'elle ne soit qu'une dépendance de
+<code>faster-whisper</code> : c'est elle qui se lie à CUDA, donc elle qui décide si l'image démarre sur le
+GPU. Ses roues officielles 4.8.3 sont compilées contre CUDA 12.8 avec <code>WITH_CUDNN=OFF</code>, ce qui
+correspond à la base <code>nvidia/cuda:12.8.1-cudnn-runtime-ubuntu22.04</code>. Toute montée de version de
+<code>ctranslate2</code> doit être vérifiée contre la base : si une version future exige CUDA 13 ou cuDNN
+10, c'est la base qu'il faut changer d'abord, pas l'épingle.</p>
+<p><code>fastapi</code> et <code>python-multipart</code> portent la même version dans les deux fichiers : le serveur
+testé en intégration continue doit être celui qui tourne dans l'image.</p>
+<p><code>httpx</code> reste en 0.28.1, la dernière version stable ; la série 1.0 n'existe qu'en
+préversions et une épingle de préversion n'a pas sa place dans une livraison.</p>
+<p><strong>Ce que ces épingles ne couvrent pas.</strong> Elles tiennent les paquets que nous nommons, pas
+l'image. Les dépendances indirectes (<code>onnxruntime</code>, <code>av</code>, <code>tokenizers</code>, <code>huggingface-hub</code>,
+<code>numpy</code>, <code>starlette</code>) peuvent encore glisser d'une reconstruction à l'autre ; les figer
+demanderait un fichier de verrouillage, et ce n'est pas fait. L'étiquette de base
+<code>nvidia/cuda:12.8.1-cudnn-runtime-ubuntu22.04</code> est mobile et n'est pas épinglée par condensé, et
+<code>apt-get install python3-pip</code> prend le pip du moment. Une reconstruction n'est donc pas
+identique à la précédente : l'image livrée est celle qu'on a mesurée, pas celle qu'on saurait
+refaire au bit près.</p>
+<h3 id="construction-et-tests">Construction et tests<a class="headerlink" href="#construction-et-tests" title="Permanent link">&para;</a></h3>
+<p>Les dépendances d'exécution sont installées dans l'image, à partir de la base CUDA. Il n'existe
+pas de <code>requirements.txt</code> : ne pas le documenter ni s'y fier. Les tests utilisent
+<code>requirements-test.txt</code> et un modèle simulé.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>scripts/faster-whisper
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-test.txt
+pytest<span class="w"> </span>-v
+</code></pre></div>
+<p>Le cache des modèles Hugging Face pointe dans <code>~/.cause/whisper</code>. En production, le mode hors
+ligne est actif par défaut : le script d'installation le lève le temps du premier démarrage.</p>
+<h2 id="qwen3-asr">Qwen3-ASR<a class="headerlink" href="#qwen3-asr" title="Permanent link">&para;</a></h2>
+<p><code>scripts/qwen-asr/</code> reprend le pli de <code>scripts/faster-whisper/</code> : un serveur FastAPI, la même
+route, le même port dédié publié sur l'hôte, le même montage de <code>~/.cause</code>, les mêmes variables
+d'exploitation (<code>CAUSE_LOG_DIR</code>, <code>HF_HUB_OFFLINE</code>, <code>LOG_LEVEL</code>). Le journal part dans
+<code>~/.cause/logs/cause-qwen-asr-&lt;date&gt;.log</code>, préfixé <code>[QWEN-ASR]</code>.</p>
+<h3 id="endpoints_1">Endpoints<a class="headerlink" href="#endpoints_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Méthode</th>
+<th>Chemin</th>
+<th>But</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/</code></td>
+<td>Modèle chargé, carte utilisée, type de calcul.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/health</code></td>
+<td>Sonde utilisée par le healthcheck Docker.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/audio/transcriptions</code></td>
+<td>Transcription. Multipart avec <code>file</code>, plus <code>model</code> ignoré, <code>language</code>, <code>response_format</code> parmi <code>json</code>, <code>text</code> et <code>verbose_json</code>, <code>temperature</code> ignoré, et <code>prompt</code> facultatif.</td>
+</tr>
+</tbody>
+</table>
+<p>Deux différences de forme avec Whisper, et elles sont dans le serveur, pas dans le contrat :</p>
+<ul>
+<li><strong><code>language</code> accepte un code ISO</strong> (<code>fr</code>, <code>fr-FR</code>, <code>pt_BR</code>) comme un nom (<code>French</code>). Qwen3-ASR
+  n'accepte que des noms de langue en clair, parmi les trente qu'il connaît ; la table de
+  conversion vit dans le serveur. <code>auto</code> ou une valeur vide laissent le moteur détecter la
+  langue. Une langue hors modèle est refusée en 400 plutôt que transcrite dans une autre.</li>
+<li><strong><code>prompt</code> devient le contexte de biaisage</strong> du moteur, le <code>context</code> de l'API Qwen. C'est le
+  champ par lequel un lexique métier peut être poussé au moteur sans changer le contrat
+  OpenAI. Whisper ignore ce champ, Qwen s'en sert.</li>
+</ul>
+<p><code>temperature</code> est accepté et ignoré : Qwen3-ASR décode en greedy.</p>
+<p>La réponse au format <code>json</code> ne contient que la clé <code>text</code>, comme Whisper. En <code>verbose_json</code>, la
+durée est lue dans l'en-tête du fichier et non rendue par le moteur, et il n'y a <strong>qu'un
+segment</strong> : les horodatages de Qwen3-ASR demandent un second modèle (<code>Qwen3-ForcedAligner-0.6B</code>)
+que nous ne chargeons pas. Une durée illisible ne coûte pas la transcription, elle rend <code>null</code>.</p>
+<h3 id="cote-backend">Côté backend<a class="headerlink" href="#cote-backend" title="Permanent link">&para;</a></h3>
+<p><code>QwenClientImpl</code> se déclare comme le moteur de transcription nommé <code>qwen</code> : c'est la valeur
+attendue par <code>ASR_DICTATED_PROVIDER</code>, voir
+<a href="configuration.html#moteurs-de-transcription">Configuration</a>. Il poste le même multipart que
+<code>WhisperClientImpl</code> et ne lit que la clé <code>text</code> de la réponse ; une réponse sans cette clé est
+une erreur, pas une transcription vide.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Défaut</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ASR_DICTATED_PROVIDER</code></td>
+<td><code>whisper</code></td>
+<td>Moteur de la piste dictée, <code>qwen</code> pour la confier à Qwen3-ASR.</td>
+</tr>
+<tr>
+<td><code>ASR_QWEN_URL</code></td>
+<td>vide</td>
+<td>Route du service. Dans le compose : <code>http://qwen-asr:8998/v1/audio/transcriptions</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Le préfixe <code>ASR_</code> n'est pas décoratif : <code>scripts/setup.sh</code> ne recopie vers le conteneur backend
+que les variables dont le préfixe figure dans <code>BACKEND_ENV_PREFIXES</code>, où <code>ASR_</code> est déclaré et
+<code>QWEN_</code> ne l'est pas. Une variable nommée <code>QWEN_ASR_URL</code> serait lue par Spring en développement
+et resterait muette dans le conteneur livré. Les variables <code>QWEN_*</code> (modèle, carte, fenêtre
+audio) règlent le service Python et non le backend : docker compose les lit sur l'hôte.</p>
+<p>Poser ces deux variables et redémarrer le backend suffit à basculer la dictée sur Qwen : aucune
+image à reconstruire, aucun changement de code. Les reposer à <code>whisper</code> ramène l'état précédent.</p>
+<h3 id="quand-le-moteur-est-nomme-mais-au-repos">Quand le moteur est nommé mais au repos<a class="headerlink" href="#quand-le-moteur-est-nomme-mais-au-repos" title="Permanent link">&para;</a></h3>
+<p>Sans <code>ASR_QWEN_URL</code>, le bean reste dans le contexte et se déclare non configuré : le serveur
+démarre normalement, la piste directe transcrit, et seule la piste qui nomme <code>qwen</code> reçoit une
+<code>AsrEngineUnavailableException</code>, soit un 503 de titre <code>ASR Engine Unavailable</code>, dont le détail
+nomme le moteur demandé et la piste, doublé des propriétés <code>asrProvider</code> et <code>asrTrack</code>. Un
+administrateur à distance lit donc sur la réponse quel moteur manquait, pour quelle piste, et
+que Whisper n'est pas en cause.</p>
+<p>Avec une URL posée mais le service arrêté (profil <code>qwen</code> non activé), l'échec est une erreur de
+connexion dont le message nomme le moteur <code>qwen</code> et son URL. Dans les deux cas l'appel refuse
+au lieu d'attendre, et aucun rapport vide n'est produit.</p>
+<h3 id="pourquoi-le-paquet-qwen-asr-et-non-transformers-seul">Pourquoi le paquet <code>qwen-asr</code> et non <code>transformers</code> seul<a class="headerlink" href="#pourquoi-le-paquet-qwen-asr-et-non-transformers-seul" title="Permanent link">&para;</a></h3>
+<p>Les poids publiés sur <code>Qwen/Qwen3-ASR-1.7B</code> portent des noms préfixés <code>thinker.</code>. La série
+<code>transformers</code> 4.57 ne connaît pas du tout l'architecture <code>qwen3_asr</code> ; la série 5.x en a une
+implémentation propre, dont les noms de poids ne sont pas ceux du point de contrôle publié : le
+chargement laisse <strong>toutes</strong> les clés inattendues, le modèle démarre avec des poids tirés au
+hasard et transcrit n'importe quoi, sans autre avertissement qu'un rapport de chargement.</p>
+<p>Le paquet officiel <code>qwen-asr</code> porte le code du modèle et exige <code>transformers==4.57.6</code> : c'est la
+seule voie <code>transformers</code> qui fonctionne avec les poids tels qu'ils sont publiés. Il est installé
+avec <code>--no-deps</code>, parce que sa liste de dépendances tire <code>gradio</code>, <code>flask</code>, <code>sox</code> et <code>pytz</code>, une
+interface de démonstration dont un serveur de production n'a que faire ; ses dépendances
+d'exécution réelles sont épinglées à la main juste au-dessus. Son autre moteur, vLLM, est écarté :
+l'image <code>vllm/vllm-openai</code> pèse 27,8 Go dépliée, contre 6,5 Go pour celle-ci.</p>
+<p>Le découpage des longs fichiers est celui du paquet : une passe jusqu'à 1200 secondes d'audio,
+puis des morceaux enchaînés avec report du texte précédent.</p>
+<h3 id="versions-epinglees_1">Versions épinglées<a class="headerlink" href="#versions-epinglees_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Paquet</th>
+<th>Version</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qwen-asr</code></td>
+<td>0.0.6</td>
+<td>Le code du modèle. Installé <code>--no-deps</code>.</td>
+</tr>
+<tr>
+<td><code>transformers</code></td>
+<td>4.57.6</td>
+<td>Exigée par <code>qwen-asr</code>. La 5.x ne charge pas ces poids.</td>
+</tr>
+<tr>
+<td><code>torch</code></td>
+<td>2.14.1</td>
+<td>Roues PyPI, qui embarquent leur runtime CUDA 13.</td>
+</tr>
+<tr>
+<td><code>accelerate</code></td>
+<td>1.12.0</td>
+<td>Épingle de <code>qwen-asr</code> (<code>device_map</code>).</td>
+</tr>
+<tr>
+<td><code>librosa</code></td>
+<td>1.0.0</td>
+<td>Lecture et rééchantillonnage de l'audio.</td>
+</tr>
+<tr>
+<td><code>soundfile</code></td>
+<td>0.14.0</td>
+<td>Lecture de l'audio, et la durée de l'en-tête.</td>
+</tr>
+<tr>
+<td><code>nagisa</code></td>
+<td>0.2.11</td>
+<td>Épingle de <code>qwen-asr</code>, importée au chargement.</td>
+</tr>
+<tr>
+<td><code>soynlp</code></td>
+<td>0.0.493</td>
+<td>Épingle de <code>qwen-asr</code>, importée au chargement.</td>
+</tr>
+<tr>
+<td><code>qwen-omni-utils</code></td>
+<td>0.0.9</td>
+<td>Épingle de <code>qwen-asr</code>.</td>
+</tr>
+<tr>
+<td><code>fastapi</code>, <code>uvicorn[standard]</code>, <code>python-multipart</code></td>
+<td>0.143.0, 0.54.0, 0.0.32</td>
+<td>Mêmes versions que le serveur Whisper.</td>
+</tr>
+</tbody>
+</table>
+<p>La base n'est pas une image CUDA mais <code>python:3.12-slim</code> : les roues <code>torch</code> de PyPI embarquent
+leur propre runtime CUDA, qu'une base CUDA ne ferait que dupliquer. En contrepartie, les deux
+variables <code>NVIDIA_VISIBLE_DEVICES</code> et <code>NVIDIA_DRIVER_CAPABILITIES</code> que les images NVIDIA posent
+d'office sont déclarées dans le Dockerfile : sans elles, le runtime de conteneur n'injecte pas
+les bibliothèques du pilote et la carte reste invisible.</p>
+<p><code>gcc</code> est installé dans l'image et n'y est pas un reste de compilation : torch 2.14 implémente
+en Triton l'opérateur <code>bmm_outer_product</code> qu'appelle l'encodeur audio, et Triton compile son
+lanceur à la <strong>première transcription</strong>. Sans compilateur C, le serveur démarre, répond
+<code>/health</code> et rend une erreur 500 sur la première vraie requête. Le cache de Triton est posé sous
+<code>~/.cause/qwen-asr/triton</code> pour que cette compilation ne soit pas refaite à chaque redémarrage
+du conteneur.</p>
+<p>Comme pour Whisper, ces épingles ne tiennent que les paquets nommés. Les dépendances indirectes
+(<code>numpy</code>, <code>numba</code>, <code>scipy</code>, <code>soxr</code>, <code>tokenizers</code>, <code>huggingface-hub</code>) peuvent encore glisser d'une
+reconstruction à l'autre, et l'étiquette de base n'est pas épinglée par condensé.</p>
+<h3 id="poids-de-limage">Poids de l'image<a class="headerlink" href="#poids-de-limage" title="Permanent link">&para;</a></h3>
+<p>Mesuré : <strong>3,40 Go</strong> en archive <code>docker save</code>, celle qui voyage sur le disque de livraison,
+contre 3,03 Go pour l'image Whisper et 8,8 Go pour <code>vllm/vllm-openai</code>. Dépliée sur la machine,
+elle pose 6,9 Go de fichiers, dont 6,5 Go de paquets Python : 3,4 Go de bibliothèques NVIDIA,
+1,2 Go de torch, 0,9 Go de Triton, et moins de 1 Go pour tout le reste. <code>docker images</code> en
+annonce 10,5 Go, qui est la somme de ses couches et non ce qu'elle pose, contre 8,1 Go annoncés
+de la même façon pour Whisper.</p>
+<p>Ce qui resterait à tailler est modeste et risqué : NCCL, cuSPARSELt et NVSHMEM, qui ne servent
+qu'au multi-carte et aux noyaux creux, pèsent 0,5 Go dépliés, mais les écarter suppose
+d'installer torch lui-même en <code>--no-deps</code> et de revérifier la liste à chaque montée de version.
+Triton, lui, n'est pas retirable : c'est lui qui porte l'opérateur ci-dessus.</p>
+<h3 id="vram-et-la-place-qui-reste">VRAM, et la place qui reste<a class="headerlink" href="#vram-et-la-place-qui-reste" title="Permanent link">&para;</a></h3>
+<p>Mesuré sur une RTX 5060 Ti, le modèle en bfloat16 chargé sur une seule carte, occupation
+relevée à <code>nvidia-smi</code> pendant la requête :</p>
+<table>
+<thead>
+<tr>
+<th>Audio soumis</th>
+<th>VRAM au pic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modèle chargé, au repos</td>
+<td>4,9 Go</td>
+</tr>
+<tr>
+<td>portion de 30 s</td>
+<td>5,0 Go</td>
+</tr>
+<tr>
+<td>2 min</td>
+<td>5,4 Go</td>
+</tr>
+<tr>
+<td>5 min</td>
+<td>9,4 Go</td>
+</tr>
+<tr>
+<td>15 min, fenêtre par défaut</td>
+<td>12,1 Go</td>
+</tr>
+<tr>
+<td>15 min, fenêtre bornée à 2 min</td>
+<td>6,5 Go</td>
+</tr>
+<tr>
+<td>15 min, fenêtre bornée à 1 min</td>
+<td>5,2 Go</td>
+</tr>
+</tbody>
+</table>
+<p>Les poids ne pèsent que 3,80 Gio pour 2,04 milliards de paramètres : <strong>c'est l'encodeur audio qui
+fait la facture</strong>, et elle suit la durée soumise d'une traite. D'où <code>QWEN_MAX_SECONDS</code>, à 120 par
+défaut, qui borne cette fenêtre : le découpage reste celui du paquet, qui coupe sur les silences
+et reporte le texte déjà transcrit d'un morceau au suivant. La valeur 0 rend la main au paquet et
+sa fenêtre de vingt minutes, et une minute suffit à ramener un quart d'heure de dictée sous les
+5,2 Go. Une couture à connaître : le paquet recolle les morceaux sans séparateur, d'où des
+phrases accolées à chaque jointure, que la rédaction en aval reponctue.</p>
+<p>La machine du CHU a deux cartes de 16311 Mio, et la pile y monte à 26,5 Go au pic sous charge,
+cumulé sur les deux cartes. Le modèle de rédaction s'étale sur les deux, Whisper occupe la
+première : au repos, la carte la moins chargée n'a qu'environ 6,4 Go de libre, et moins sous
+charge. <strong>Qwen3-ASR ne tient donc pas d'office</strong> : c'est pourquoi le service ne démarre pas avec
+les autres, et pourquoi <code>QWEN_DEVICE</code> doit nommer explicitement la carte
+(<code>QWEN_DEVICE=cuda:1</code>) au lieu de laisser <code>auto</code> prendre la première. Avec la fenêtre à une
+minute, le moteur demande 5,2 Go quelle que soit la longueur de la dictée : c'est la seule
+configuration qui passerait aujourd'hui, et sans marge. L'alternative est de libérer une carte,
+en ramenant la rédaction sur une seule, ou d'attendre la montée en VRAM.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>--profile<span class="w"> </span>qwen<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>qwen-asr
+</code></pre></div>
+<p>Son image voyage sur le disque de livraison comme les deux autres et le script la charge, ses
+4,4 Go de poids sont posés dans <code>~/.cause/qwen-asr/hub</code> par la mise en place, mais le compose du
+client le déclare derrière le profil <code>qwen</code> : <code>docker compose up -d</code> ne le démarre pas. Le
+réveiller ne demande donc <strong>aucun téléchargement</strong>, seulement la commande ci-dessus. Démarré, le
+moteur ne transcrit encore rien : c'est <code>ASR_DICTATED_PROVIDER</code> qui lui envoie la dictée.</p>
+<p>Trois autres variables règlent la consommation : <code>QWEN_DTYPE</code> (<code>bfloat16</code> par défaut),
+<code>QWEN_BATCH_SIZE</code> (1 par défaut, pour éviter de payer un lot en mémoire) et
+<code>QWEN_MAX_NEW_TOKENS</code> (4096, à monter pour un très long dicté).</p>
+<h3 id="construction-et-tests_1">Construction et tests<a class="headerlink" href="#construction-et-tests_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>scripts/qwen-asr
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-test.txt
+pytest<span class="w"> </span>-v
+</code></pre></div>
+<p>Les tests simulent le moteur, <code>torch</code> et le lecteur audio : ils ne demandent ni carte graphique,
+ni réseau, ni les 4,4 Go du modèle. Le travail <code>test-transcription</code> les joue à chaque poussée,
+avec ceux de Whisper, les deux suites partageant un seul exécuteur.</p>
+<p>Le cache des modèles Hugging Face pointe dans <code>~/.cause/qwen-asr</code>, et le mode hors ligne est
+actif par défaut, comme pour Whisper : le premier démarrage d'une machine neuve demande de le
+lever le temps du téléchargement.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

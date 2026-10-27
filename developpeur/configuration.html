@@ -1,0 +1,1840 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Manuels utilisateur, administrateur et développeur de Kauze">
+      
+      
+      
+        <link rel="canonical" href="https://manuels.kauze.tech/developpeur/configuration.html">
+      
+      
+        <link rel="prev" href="frontend.html">
+      
+      
+        <link rel="next" href="deploiement.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/kauze.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Configuration - Manuels Kauze</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../index.html" title="Manuels Kauze" class="md-header__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manuels Kauze
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au thème sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au thème clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Manuels Kauze" class="md-nav__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    Manuels Kauze
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuels Kauze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilisateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel utilisateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/compte.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compte et connexion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/infirmier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parcours infirmier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/actes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les actes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/enregistrer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enregistrer une consultation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/dicter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicter son rapport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/rapports.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les rapports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/editer-valider-exporter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Éditer, valider, exporter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/verrou.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Le verrou de visibilité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Questions fréquentes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administrateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administrateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel administrateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/https.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/licence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La licence machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/donnees.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Données et sauvegarde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/comptes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comptes et patients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/actes-et-prompts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actes, prompts et templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/modeles-pdf.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/exploitation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/depannage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Développeur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Développeur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel développeur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vue-ensemble.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contrats API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="whisper.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services de transcription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="frontend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="configuration.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#les-profils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les profils
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-une-variable-arrive-dans-le-conteneur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment une variable arrive dans le conteneur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moteurs-de-transcription" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Moteurs de transcription
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pieges-connus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pièges connus
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deploiement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Déploiement, certificat et machine hôte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests et intégration continue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="regles-metier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Règles métier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scripts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="documentation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La documentation elle-même
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#les-profils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les profils
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-une-variable-arrive-dans-le-conteneur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment une variable arrive dans le conteneur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#moteurs-de-transcription" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Moteurs de transcription
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pieges-connus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pièges connus
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<p>Les propriétés vivent dans <code>application.yml</code>, avec une surcouche de production. Chaque domaine
+a sa classe de propriétés typées, sauf quelques valeurs lues par annotation directe.</p>
+<table>
+<thead>
+<tr>
+<th>Domaine</th>
+<th>Clés principales</th>
+<th>Classe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serveur et authentification</td>
+<td><code>server.port</code>, <code>auth.jwt-secret</code>, <code>auth.token-expiration-hours</code></td>
+<td>lues par annotation dans le service d'authentification</td>
+</tr>
+<tr>
+<td>Envoi de fichiers</td>
+<td><code>spring.servlet.multipart.*</code></td>
+<td>Spring</td>
+</tr>
+<tr>
+<td>Embedding</td>
+<td><code>spring.ai.embedding.transformer.*</code></td>
+<td>Spring AI</td>
+</tr>
+<tr>
+<td>Clients HTTP</td>
+<td><code>http-client.connect-timeout</code>, <code>read-timeout</code>, <code>write-timeout</code></td>
+<td><code>HttpClientConfig</code></td>
+</tr>
+<tr>
+<td>Whisper</td>
+<td><code>medical-record.whisper.endpoint</code>, <code>model</code>, <code>language</code></td>
+<td><code>WhisperProperties</code></td>
+</tr>
+<tr>
+<td>Moteur de transcription par piste</td>
+<td><code>asr.live-provider</code>, <code>asr.dictated-provider</code></td>
+<td><code>AsrProperties</code>, <code>AsrEngineFactory</code></td>
+</tr>
+<tr>
+<td>Mutex GPU</td>
+<td><code>medical-record.gpu-mutex-enabled</code></td>
+<td><code>GpuLockService</code></td>
+</tr>
+<tr>
+<td>Stockage</td>
+<td><code>medical-record.storage.*</code>, dont les dossiers de données et les purges</td>
+<td>annotations dans les repositories</td>
+</tr>
+<tr>
+<td>Parcours</td>
+<td><code>medical-record.recording-flow.golden-rules-consultation-threshold</code></td>
+<td><code>ConsultationService</code></td>
+</tr>
+<tr>
+<td>Verrou</td>
+<td><code>medical-record.visibility-lock.timeout</code>, <code>expiry-check-interval</code></td>
+<td><code>VisibilityLockService</code>, <code>LockExpiryTask</code></td>
+</tr>
+<tr>
+<td>Portions</td>
+<td><code>medical-record.segments.*</code></td>
+<td><code>AudioSegmentService</code></td>
+</tr>
+<tr>
+<td>Seuil de transcription</td>
+<td><code>transcription.threshold.min-length</code>, <code>min-word-count</code></td>
+<td><code>TranscriptionThresholdProperties</code></td>
+</tr>
+<tr>
+<td>Édition de portion</td>
+<td><code>segment-editing.enabled</code></td>
+<td><code>SegmentEditingProperties</code></td>
+</tr>
+<tr>
+<td>Moissonnage</td>
+<td><code>asr-harvest.*</code></td>
+<td><code>AsrHarvestProperties</code></td>
+</tr>
+<tr>
+<td>Génération</td>
+<td><code>report.generation.segment-check-interval-seconds</code>, <code>max-wait-time-seconds</code>, <code>workers</code></td>
+<td><code>ReportGenerationProperties</code></td>
+</tr>
+<tr>
+<td>Rédactions orphelines</td>
+<td><code>report.generation.stale-check-interval</code>, <code>stale-grace-seconds</code></td>
+<td><code>StaleGenerationTask</code></td>
+</tr>
+<tr>
+<td>Rétention audio</td>
+<td><code>medical-record.storage.cleanup-after-hours</code> (orphelins seuls), <code>audio-warn-bytes</code></td>
+<td><code>AudioFileStorageService</code></td>
+</tr>
+<tr>
+<td>Corpus d'entraînement</td>
+<td><code>medical-record.storage.training-corpus-dir</code>, <code>training-corpus-enabled</code> (<code>TRAINING_CORPUS_ENABLED</code>, vrai par défaut)</td>
+<td><code>TrainingCorpusStore</code></td>
+</tr>
+<tr>
+<td>Remontée des évaluations</td>
+<td><code>remontee.*</code>, dont <code>enabled</code> (vrai par défaut), <code>sources</code> et les deux crons</td>
+<td><code>RemonteeProperties</code>, assemblage dans <code>RemonteeConfig</code></td>
+</tr>
+<tr>
+<td>Tâches planifiées</td>
+<td><code>spring.task.scheduling.pool.size</code> (4)</td>
+<td>Spring, <code>SchedulingConfig</code> pour l'activation</td>
+</tr>
+<tr>
+<td>Modèles de langue</td>
+<td><code>llm.provider</code>, <code>ollama.*</code>, <code>airllm.*</code>, <code>openai.*</code>, <code>smoothing.*</code></td>
+<td>une classe par fournisseur</td>
+</tr>
+<tr>
+<td>Lecture du dossier papier</td>
+<td><code>cause.photos-dir</code> (photos remises droites et rangées), <code>lecture.model</code> (<code>gemma4:26b</code> par défaut, le 12b n'y arrive pas ; vide : le modèle Ollama actif lit aussi les photos)</td>
+<td><code>PhotoStore</code>, <code>LectureProperties</code></td>
+</tr>
+<tr>
+<td>Enrichissement de première génération</td>
+<td><code>enrichment.*</code></td>
+<td><code>EnrichmentProperties</code></td>
+</tr>
+<tr>
+<td>Glossaire</td>
+<td><code>glossary.*</code></td>
+<td><code>GlossaryProperties</code></td>
+</tr>
+<tr>
+<td>Journalisation</td>
+<td><code>logging.level.*</code></td>
+<td>Logback, fichier seulement en production</td>
+</tr>
+</tbody>
+</table>
+<h2 id="les-profils">Les profils<a class="headerlink" href="#les-profils" title="Permanent link">&para;</a></h2>
+<p>Le backend lit <code>application.yml</code> puis, en production, la surcouche <code>application-prod.yml</code>
+activée par <code>SPRING_PROFILES_ACTIVE=prod</code> dans le docker-compose. En production :</p>
+<ul>
+<li>le port est 8090 ;</li>
+<li>Swagger et la documentation OpenAPI sont désactivés ;</li>
+<li>l'endpoint <code>/actuator/health</code> ne renvoie que l'état global, sans détail ;</li>
+<li>les logs sont écrits dans des fichiers sous <code>~/.cause/logs/</code>.</li>
+</ul>
+<h2 id="comment-une-variable-arrive-dans-le-conteneur">Comment une variable arrive dans le conteneur<a class="headerlink" href="#comment-une-variable-arrive-dans-le-conteneur" title="Permanent link">&para;</a></h2>
+<p>Deux chemins, et ils ne se valent pas.</p>
+<p><strong>L'environnement de la machine.</strong> Le script d'installation copie dans <code>.env.backend</code> chaque
+variable de l'environnement dont le nom commence par un préfixe connu : <code>SPRING_</code>, <code>SERVER_</code>,
+<code>MANAGEMENT_</code>, <code>LOGGING_</code>, <code>SPRINGDOC_</code>, <code>AUTH_</code>, <code>HTTP_CLIENT_</code>, <code>TASK_</code>, <code>WHISPER_</code>, <code>ASR_</code>,
+<code>MEDICAL_RECORD_</code>, <code>TRANSCRIPTION_</code>, <code>REPORT_</code>, <code>LLM_</code>, <code>OLLAMA_</code>, <code>AIRLLM_</code>, <code>OPENAI_</code>,
+<code>SMOOTHING_</code>, <code>ENRICHMENT_</code>, <code>REMONTEE_</code>, <code>TRAINING_CORPUS_</code>. C'est le chemin des machines de
+développement et de l'intégration continue, où l'environnement est déjà la source de vérité. Sur
+un serveur, il demande de modifier <code>/etc/environment</code> puis de relancer le script.</p>
+<p><strong>Le fichier de réglages de l'administrateur</strong>, <code>~/.cause/.env.backend.overrides</code>, lu en dernier,
+donc il l'emporte. Aucun nom n'y est interdit, et il ne filtre rien : c'est le seul chemin pour
+<code>GLOSSARY_</code>, <code>SEGMENT_EDITING_</code>, <code>LECTURE_</code> et <code>CAUSE_</code>, dont le préfixe n'est pas dans la liste
+ci-dessus. Le script n'y écrit jamais rien.</p>
+<p>La règle de partage entre les deux fichiers générés est simple : <strong><code>.env.backend</code> porte ce que
+nous avons généré, à l'installation ou à la gravure ; <code>.env.backend.overrides</code> porte ce que
+l'administrateur décide d'y mettre à la main ensuite.</strong> Les deux portent des secrets possibles,
+donc aucune sauvegarde ne les emporte, et <code>.env.ghcr</code>, partagé avec l'éditeur, est maintenu en
+600. Les identifiants du stockage ne doivent jamais être écrits dans <code>.env.backend</code>, que le
+script réécrit à chaque passage.</p>
+<p>Sur une machine de développement, ces fichiers sont dans le dépôt, à côté du compose qui les lit :
+chacun vit toujours auprès du compose qui fait foi.</p>
+<p>Le docker-compose, enfin, fixe lui-même le câblage entre les services, et ces valeurs passent
+avant celles des deux fichiers : <code>SPRING_PROFILES_ACTIVE</code>, <code>WHISPER_URL</code>,
+<code>MEDICAL_RECORD_WHISPER_ENDPOINT</code>, <code>OLLAMA_URL</code>, <code>OLLAMA_MODEL</code> et <code>ENRICHMENT_ENABLED</code>.</p>
+<h2 id="moteurs-de-transcription">Moteurs de transcription<a class="headerlink" href="#moteurs-de-transcription" title="Permanent link">&para;</a></h2>
+<p>Le moteur n'est pas le même selon qui parle : Whisper encaisse mieux l'accent et la mauvaise
+articulation des patients, un moteur plus précis sur le lexique médical sert mieux la dictée du
+praticien. Le choix se fait donc <strong>par piste</strong>, pas par type d'acte, et s'externalise par deux
+variables, <code>ASR_LIVE_PROVIDER</code> pour le direct et <code>ASR_DICTATED_PROVIDER</code> pour la dictée. Les actes
+sans piste live (<code>exam</code>, <code>surgery</code>) reçoivent de fait le moteur de la dictée.</p>
+<p>Un moteur apporte aussi son adresse : <code>ASR_QWEN_URL</code> pour Qwen3-ASR, vide par défaut. Le préfixe
+<code>ASR_</code> n'est pas décoratif, c'est lui qui fait franchir la porte du conteneur par le chemin de
+l'environnement : <code>scripts/setup.sh</code> ne recopie dans <code>.env.backend</code> que les variables dont le
+préfixe figure dans <code>BACKEND_ENV_PREFIXES</code>. Une variable nommée <code>QWEN_*</code> serait lue en
+développement et muette en production, à moins d'être écrite dans <code>.env.backend.overrides</code>, qui
+ne filtre rien.</p>
+<p>Les deux défauts valent <code>whisper</code>, donc une installation qui ne pose rien se comporte comme avant
+l'arrivée d'un second moteur. Reposer les deux variables à <code>whisper</code> et redémarrer ramène ce
+comportement : c'est le filet de l'installation hospitalière, et aucune image n'est à reconstruire.</p>
+<p>Côté code, <code>AsrEngine</code> est l'interface d'un moteur, qui porte son nom, dit s'il est configuré et
+transcrit ; chaque implémentation est un bean, <code>AsrEngineFactory</code> les indexe par nom et
+<code>TranscriptionService</code> lui demande le moteur de la piste reçue. Deux propriétés tiennent par les
+tests (<code>AsrEngineFactoryTest</code>, <code>asr-routing.feature</code>, <code>AsrEngineStartupTest</code>) :</p>
+<ul>
+<li>une variable absente, vide ou dans une autre casse ne fait pas dérailler le choix, elle retombe
+  sur <code>whisper</code> ;</li>
+<li>une variable qui nomme un moteur que le serveur ne sert pas, ou un moteur sans URL, <strong>ne fait pas
+  échouer le démarrage</strong> : elle lève une <code>AsrEngineUnavailableException</code> au moment où la piste
+  demande son moteur, ce qui met la portion en échec et laisse l'autre piste intacte.</li>
+</ul>
+<h2 id="pieges-connus">Pièges connus<a class="headerlink" href="#pieges-connus" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>La licence machine n'a aucune propriété</strong>, les variables d'environnement primant sur les
+  fichiers de profil, y compris <code>application-prod.yml</code> : une clé <code>licence.enabled</code> se débrancherait
+  en une ligne, et des chemins de sources configurables feraient lire une identité fabriquée. Tout
+  est compilé dans <code>LicenceConfig</code>, et <code>LicenceConfigTest</code> vérifie qu'aucune clé <code>licence</code> ne
+  réapparaît dans les fichiers de configuration. Le bean s'efface sous le profil <code>test</code>, dont la
+  configuration de remplacement vit dans les sources de test et n'est jamais livrée. La durée de
+  la fenêtre de grâce, soixante-douze heures, est compilée pour la même raison.</p>
+</li>
+<li>
+<p>La durée maximale de consultation est déclarée dans les propriétés de portions mais <strong>n'est
+  appliquée nulle part</strong>. Ne pas la documenter comme une limite effective.</p>
+</li>
+<li>Le défaut Java du mutex GPU est l'inverse du défaut du fichier. C'est le fichier qui gagne.</li>
+<li>Le secret de jeton est versionné dans le fichier de configuration, sans surcouche de
+  production. Toute installation doit le remplacer par variable d'environnement, à une valeur
+  longue, aléatoire et propre à l'établissement : c'est elle qui signe les sessions, et deux
+  serveurs qui la partagent acceptent les jetons l'un de l'autre.</li>
+<li>Le profil <code>test</code> a son propre fichier : dossiers de données isolés sous <code>target</code>, édition de
+  portion activée, moissonnage désactivé, workers non démarrés, remontée éteinte.</li>
+<li><strong>La remontée est active mais n'a pas de clés par défaut, et c'est une règle, pas un oubli.</strong>
+  Le stockage est celui de l'éditeur : son seau, sa racine et sa région sont les mêmes partout,
+  donc ce sont des défauts versionnés, posés aux deux mêmes endroits, <code>RemonteeProperties</code> et
+  <code>application.yml</code>. Les deux clés, elles, sont des secrets et n'ont aucune valeur dans le dépôt ;
+  l'avertissement unique d'une remontée incomplète est le rappel qu'il faut les poser. Les tests
+  signent contre des identifiants manifestement faux et un faux point de terminaison local, jamais
+  contre le réseau : le profil <code>test</code> efface les trois valeurs versionnées pour qu'aucun test ne
+  puisse joindre le vrai seau.</li>
+<li>Le bloc <code>task</code> de la racine est l'espace de noms du projet, lu par <code>CauseApplication</code> pour
+  l'exécuteur <code>@Async</code>. Le vivier du planificateur <code>@Scheduled</code> est ailleurs,
+  <code>spring.task.scheduling.pool.size</code> : une taille posée dans le bloc racine serait ignorée sans
+  que rien ne le dise.</li>
+</ul>
+<p>Les valeurs d'exploitation et leur effet côté serveur sont dans
+<a href="../administrateur/configuration.html">Configuration</a> du manuel administrateur.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

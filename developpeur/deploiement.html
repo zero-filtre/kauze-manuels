@@ -1,0 +1,2499 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Manuels utilisateur, administrateur et développeur de Kauze">
+      
+      
+      
+        <link rel="canonical" href="https://manuels.kauze.tech/developpeur/deploiement.html">
+      
+      
+        <link rel="prev" href="configuration.html">
+      
+      
+        <link rel="next" href="tests.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/kauze.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Déploiement, certificat et machine hôte - Manuels Kauze</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploiement-certificat-et-machine-hote" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../index.html" title="Manuels Kauze" class="md-header__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manuels Kauze
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Déploiement, certificat et machine hôte
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au thème sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au thème clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Manuels Kauze" class="md-nav__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    Manuels Kauze
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuels Kauze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilisateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel utilisateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/compte.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compte et connexion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/infirmier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parcours infirmier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/actes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les actes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/enregistrer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enregistrer une consultation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/dicter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicter son rapport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/rapports.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les rapports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/editer-valider-exporter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Éditer, valider, exporter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/verrou.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Le verrou de visibilité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Questions fréquentes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administrateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administrateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel administrateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/https.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/licence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La licence machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/donnees.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Données et sauvegarde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/comptes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comptes et patients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/actes-et-prompts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actes, prompts et templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/modeles-pdf.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/exploitation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/depannage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Développeur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Développeur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel développeur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vue-ensemble.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contrats API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="whisper.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services de transcription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="frontend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Déploiement, certificat et machine hôte
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="deploiement.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Déploiement, certificat et machine hôte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pourquoi-https-est-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi HTTPS est obligatoire
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-domaine-nest-pas-dans-limage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le domaine n'est pas dans l'image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-le-certificat-est-obtenu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment le certificat est obtenu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comment le certificat est obtenu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-mise-en-place-desec-une-fois-pour-le-domaine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La mise en place deSEC, une fois pour le domaine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-le-script-fait-du-jeton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que le script fait du jeton
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lemission-dure-dix-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'émission dure dix minutes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renouvellement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Renouvellement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deux-routes-et-ce-qui-decide-laquelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deux routes, et ce qui décide laquelle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deux routes, et ce qui décide laquelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limage-du-materiel-leger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'image du matériel léger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-les-tests-tiennent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que les tests tiennent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trois-endroits-dou-le-script-se-lance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trois endroits d'où le script se lance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-montee-de-version-en-une-commande" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La montée de version en une commande
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installer-depuis-les-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installer depuis les sources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installer depuis les sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acces-au-depot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accès au dépôt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construire-et-demarrer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construire et démarrer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-le-script-enchaine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que le script enchaîne
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#les-deux-familles-de-gestionnaire-reseau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les deux familles de gestionnaire réseau
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#les-prerequis-et-ce-qui-les-dicte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les prérequis, et ce qui les dicte
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-machine-hote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La machine hôte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La machine hôte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#les-mises-a-jour-du-systeme-ne-se-subissent-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les mises à jour du système ne se subissent pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-linstallation-coupe-et-pourquoi-cest-elle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que l'installation coupe, et pourquoi c'est elle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lever-le-verrou-le-temps-dune-fenetre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lever le verrou le temps d'une fenêtre
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lire-ce-qui-est-en-attente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lire ce qui est en attente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#le-gel-de-la-pile-du-pilote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le gel de la pile du pilote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tests.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests et intégration continue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="regles-metier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Règles métier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scripts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="documentation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La documentation elle-même
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pourquoi-https-est-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi HTTPS est obligatoire
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-domaine-nest-pas-dans-limage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le domaine n'est pas dans l'image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-le-certificat-est-obtenu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment le certificat est obtenu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comment le certificat est obtenu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-mise-en-place-desec-une-fois-pour-le-domaine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La mise en place deSEC, une fois pour le domaine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-le-script-fait-du-jeton" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que le script fait du jeton
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lemission-dure-dix-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'émission dure dix minutes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renouvellement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Renouvellement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deux-routes-et-ce-qui-decide-laquelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deux routes, et ce qui décide laquelle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deux routes, et ce qui décide laquelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limage-du-materiel-leger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'image du matériel léger
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-les-tests-tiennent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que les tests tiennent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trois-endroits-dou-le-script-se-lance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trois endroits d'où le script se lance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-montee-de-version-en-une-commande" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La montée de version en une commande
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installer-depuis-les-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installer depuis les sources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installer depuis les sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acces-au-depot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accès au dépôt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construire-et-demarrer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construire et démarrer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-le-script-enchaine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que le script enchaîne
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#les-deux-familles-de-gestionnaire-reseau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les deux familles de gestionnaire réseau
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#les-prerequis-et-ce-qui-les-dicte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les prérequis, et ce qui les dicte
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-machine-hote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La machine hôte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La machine hôte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#les-mises-a-jour-du-systeme-ne-se-subissent-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les mises à jour du système ne se subissent pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-linstallation-coupe-et-pourquoi-cest-elle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que l'installation coupe, et pourquoi c'est elle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lever-le-verrou-le-temps-dune-fenetre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lever le verrou le temps d'une fenêtre
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lire-ce-qui-est-en-attente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lire ce qui est en attente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#le-gel-de-la-pile-du-pilote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le gel de la pile du pilote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="deploiement-certificat-et-machine-hote">Déploiement, certificat et machine hôte<a class="headerlink" href="#deploiement-certificat-et-machine-hote" title="Permanent link">&para;</a></h1>
+<p>Cette page porte le pourquoi de ce qui entoure l'application : le certificat, le nom du site,
+l'installation depuis les sources et l'état de la machine hôte. Les gestes correspondants sont
+dans le manuel administrateur, sous forme de procédures.</p>
+<h2 id="pourquoi-https-est-obligatoire">Pourquoi HTTPS est obligatoire<a class="headerlink" href="#pourquoi-https-est-obligatoire" title="Permanent link">&para;</a></h2>
+<p>Les navigateurs n'autorisent l'accès au micro que dans un contexte sécurisé. Une adresse en
+<code>http://</code> sur le réseau local est refusée, sans message clair pour l'utilisateur.</p>
+<p>Kauze va plus loin : le serveur nginx ne sert en HTTP que le portail captif du hotspot, les QR
+codes et la page d'impression. Toute autre requête est redirigée vers le nom du site, et l'API
+n'est pas relayée en HTTP. Sans certificat valide, l'application entière est inaccessible, pas
+seulement l'enregistrement.</p>
+<h2 id="le-domaine-nest-pas-dans-limage">Le domaine n'est pas dans l'image<a class="headerlink" href="#le-domaine-nest-pas-dans-limage" title="Permanent link">&para;</a></h2>
+<p>Chaque site installé a son nom, un sous-domaine de <code>kauze.tech</code>, par exemple <code>chu.kauze.tech</code>.
+<strong>Il n'est pas écrit dans l'image</strong> : le nginx du frontend porte un modèle où <code>${KAUZE_DOMAINE}</code>
+est substitué au démarrage du conteneur, depuis la ligne <code>KAUZE_DOMAINE</code> du fichier <code>.env</code>. Une
+seule image sert donc tous les sites, et le disque de livraison déclare lequel elle servira
+(<code>prepare-delivery.sh --domaine &lt;nom&gt;</code>).</p>
+<p>Changer de nom sur une machine installée tient en une ligne du <code>.env</code>, un <code>docker compose up -d</code>,
+et un certificat réémis pour le nouveau nom. Le script d'installation lit cette même ligne : c'est
+pour ce nom qu'il demande le certificat et c'est elle que portent les QR codes. Sans elle, il le
+dit et n'émet rien, plutôt que d'émettre pour un nom que personne ne tape. L'adresse du hotspot,
+<code>192.168.4.1</code>, reste fixée dans le script d'installation.</p>
+<h2 id="comment-le-certificat-est-obtenu">Comment le certificat est obtenu<a class="headerlink" href="#comment-le-certificat-est-obtenu" title="Permanent link">&para;</a></h2>
+<p>Le serveur n'est pas joignable depuis Internet, donc la validation classique par HTTP est
+impossible. Le certificat Let's Encrypt est obtenu par validation DNS, via le fournisseur
+deSEC, qui expose une API que le plugin certbot sait piloter.</p>
+<p>Il faut que la zone du domaine soit déléguée en totalité à deSEC par des enregistrements NS.
+Un simple CNAME sur <code>_acme-challenge</code> ne suffit pas : le plugin met à jour la zone chez deSEC
+et ne trouve pas le nom s'il n'y est pas hébergé.</p>
+<h3 id="la-mise-en-place-desec-une-fois-pour-le-domaine">La mise en place deSEC, une fois pour le domaine<a class="headerlink" href="#la-mise-en-place-desec-une-fois-pour-le-domaine" title="Permanent link">&para;</a></h3>
+<p>Ces trois gestes se font <strong>une seule fois pour <code>kauze.tech</code>, par l'éditeur</strong>, jamais par le
+client. Un site installé ne reçoit que le jeton.</p>
+<ol>
+<li>Créez un compte deSEC et ajoutez-y la zone, c'est-à-dire le domaine racine (<code>kauze.tech</code>),
+   pas le nom du site.</li>
+<li>Chez le registrar, remplacez les serveurs de noms par <code>ns1.desec.io</code> et <code>ns2.desec.org</code>.
+   Contrôlez la délégation par <code>dig NS &lt;domaine&gt; +short</code> avant d'aller plus loin.</li>
+<li>Créez un jeton d'API. Il n'a besoin ni de créer ni de supprimer des domaines.</li>
+</ol>
+<h3 id="ce-que-le-script-fait-du-jeton">Ce que le script fait du jeton<a class="headerlink" href="#ce-que-le-script-fait-du-jeton" title="Permanent link">&para;</a></h3>
+<p>Relancé avec un <code>desec.ini</code> en place, le script installe certbot et son plugin deSEC, émet
+ou renouvelle le certificat, copie <code>fullchain.pem</code> et <code>privkey.pem</code> dans <code>~/.cause/certs/</code>
+et y écrit le bloc nginx <code>https.conf</code> : port 443, TLS 1.2 et 1.3, relais de <code>/api/</code> vers le
+backend, taille d'upload maximale de 500 Mo.</p>
+<p>nginx charge ce bloc au démarrage du conteneur. Si le certificat est arrivé après le
+premier démarrage, un <code>docker compose restart frontend</code> suffit. Aucune reconstruction
+d'image n'est nécessaire. Si le fichier <code>desec.ini</code> est absent, le script affiche la marche à
+suivre et continue sans certificat.</p>
+<h3 id="lemission-dure-dix-minutes">L'émission dure dix minutes<a class="headerlink" href="#lemission-dure-dix-minutes" title="Permanent link">&para;</a></h3>
+<p>Le script fait attendre certbot 600 secondes entre la publication de l'enregistrement de l'épreuve
+et la demande de validation. Les deux serveurs de deSEC mettent plus de deux minutes à se
+synchroniser, et Let's Encrypt valide depuis quatre régions dont trois doivent voir le même
+enregistrement : une attente plus courte échoue sur un <code>NXDOMAIN</code> que rien dans la configuration
+n'explique.</p>
+<p>La longue pause après <code>Requesting a certificate</code> est donc normale.</p>
+<h3 id="renouvellement">Renouvellement<a class="headerlink" href="#renouvellement" title="Permanent link">&para;</a></h3>
+<p>Un minuteur systemd <code>cause-cert-renew.timer</code> tente le renouvellement deux fois par jour, à
+3 h 17 et 15 h 17, avec un décalage aléatoire de trente minutes. Le crochet de déploiement
+recopie le certificat et recharge nginx.</p>
+<p>Let's Encrypt renouvelle un certificat trente jours avant son expiration. Le serveur doit donc
+être allumé et connecté à Internet au moins une fois par mois, sinon le certificat expire et
+l'application devient inaccessible.</p>
+<h2 id="deux-routes-et-ce-qui-decide-laquelle">Deux routes, et ce qui décide laquelle<a class="headerlink" href="#deux-routes-et-ce-qui-decide-laquelle" title="Permanent link">&para;</a></h2>
+<p>Le disque et le registre ne portent pas la même nature de matériel, et la mesure du 18/10/2026 le
+dit sans ambiguïté : cent vingt-trois kilooctets de code et de configuration, contre vingt-cinq
+gigaoctets de poids de modèles et d'images de moteurs. Rien entre les deux. Les faire voyager
+ensemble donnait aux premiers les contraintes des seconds : corriger une ligne de <code>setup.sh</code>
+demandait une gravure, un déplacement et une réinstallation.</p>
+<table>
+<thead>
+<tr>
+<th>Nature</th>
+<th>Exemples</th>
+<th>Route</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code et configuration</td>
+<td><code>setup.sh</code>, <code>contexte.py</code>, compose client, <code>outils/</code></td>
+<td>registre</td>
+</tr>
+<tr>
+<td>Poids et images de moteurs</td>
+<td>modèles Ollama, <code>whisper/hub</code>, <code>djl-cache</code>, archives <code>docker save</code></td>
+<td>disque</td>
+</tr>
+</tbody>
+</table>
+<p>La règle est de nature et non de taille : un seuil en mégaoctets tomberait dans le vide qui
+sépare les deux familles, et demanderait d'être arbitré à chaque fichier ajouté.</p>
+<h3 id="limage-du-materiel-leger">L'image du matériel léger<a class="headerlink" href="#limage-du-materiel-leger" title="Permanent link">&para;</a></h3>
+<p><code>ghcr.io/zero-filtre/cause-outillage:&lt;version&gt;</code>, publiée par la même CI, à la même version que le
+backend, et pesant moins de trois mégaoctets. Son <code>ENTRYPOINT</code> pose les fichiers sur ce qui est
+monté en <code>/cible</code>, nomme chacun d'eux, et ne porte ni <code>.env</code> ni <code>.env.backend.overrides</code> : ce sont
+les fichiers du client, l'un écrit par son installation, l'autre par son administrateur.</p>
+<p>Trois décisions qui se justifient :</p>
+<ul>
+<li><strong>Un conteneur, pas un script posé sur la machine.</strong> Ce qui va chercher les nouveaux fichiers
+  doit pouvoir se remplacer lui-même. Un <code>maj.sh</code> posé par la gravure aurait eu le défaut qu'il
+  corrige, et le marché répond de la même façon : l'agent de Distr lance un second conteneur pour
+  se mettre à jour, parce qu'un programme ne se remplace pas pendant qu'il tourne. Depuis le
+  19/10/2026, <code>setup.sh upgrade</code> lance ce conteneur lui-même, et se pare du même danger en
+  travaillant depuis une copie temporaire de lui-même, voir
+  <a href="#la-montee-de-version-en-une-commande">La montée de version en une commande</a>.</li>
+<li><strong>Une image ordinaire plutôt qu'un artefact OCI.</strong> Publier des fichiers quelconques dans un
+  registre est une pratique établie, et son outillage s'appelle ORAS ; il demande un binaire de
+  plus sur le serveur du client, quand une image se retire avec le <code>docker</code> déjà installé et déjà
+  authentifié.</li>
+<li><strong>Pas de mise à jour automatique.</strong> Sur un serveur hospitalier, le générateur de comptes rendus
+  ne change pas en silence pendant une consultation. La version se choisit.</li>
+</ul>
+<h3 id="ce-que-les-tests-tiennent">Ce que les tests tiennent<a class="headerlink" href="#ce-que-les-tests-tiennent" title="Permanent link">&para;</a></h3>
+<p>La liste des pièces et le rendu du compose client viennent de <code>poser_outillage</code> dans
+<code>livraison.py</code>, qui sert déjà la gravure, et <code>outillage.py</code> est ce que le Dockerfile appelle : une
+seconde liste aurait vieilli sans un mot, et une mise à jour aurait laissé une machine à moitié
+neuve. Un test compare le matériel léger du disque à celui de l'image, un autre vérifie que le
+Dockerfile copie chaque pièce que le composeur lit.</p>
+<p>Sa dernière ligne renvoie à <code>sudo bash ~/.cause/setup.sh</code> pour qui l'a lancé à la main ; lancé
+par <code>setup.sh upgrade</code>, le script enchaîne sans la lire. Elle annonçait d'abord
+<code>sudo bash /cible/setup.sh</code>, un chemin qui n'existe que dans le conteneur.</p>
+<h3 id="trois-endroits-dou-le-script-se-lance">Trois endroits d'où le script se lance<a class="headerlink" href="#trois-endroits-dou-le-script-se-lance" title="Permanent link">&para;</a></h3>
+<p><code>setup.sh</code> reconnaît seul d'où il est lancé, et ne pose aucune question pour cela :</p>
+<table>
+<thead>
+<tr>
+<th>À côté de lui</th>
+<th>Mode</th>
+<th>Ce qu'il fait des images</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TAILLES.txt</code> et <code>VERSION</code></td>
+<td>disque de livraison</td>
+<td>charge les moteurs du disque, tire le backend et le frontend du registre</td>
+</tr>
+<tr>
+<td><code>docker-compose.yml</code> et <code>.env</code> du client</td>
+<td>installation en place, <code>~/.cause</code></td>
+<td>tire du registre à la version que le <code>.env</code> épingle</td>
+</tr>
+<tr>
+<td>ni l'un ni l'autre</td>
+<td>dépôt</td>
+<td>construit depuis les sources</td>
+</tr>
+</tbody>
+</table>
+<p>Seul le dépôt cherche un disque et propose de construire depuis les sources. Sur un serveur
+livré, cette question était un piège : une réponse vide tentait un <code>docker compose build</code> depuis
+un dossier sans sources. L'installation depuis le disque pose l'installeur, le contexte et les
+outils à côté des données, exactement ce que l'image d'outillage y pose : le dossier du disque
+peut disparaître, tout se relance depuis <code>~/.cause</code>.</p>
+<h3 id="la-montee-de-version-en-une-commande">La montée de version en une commande<a class="headerlink" href="#la-montee-de-version-en-une-commande" title="Permanent link">&para;</a></h3>
+<p><code>sudo bash ~/.cause/setup.sh upgrade [version]</code>. Le script tire <code>cause-outillage:stable</code>, ou le
+numéro donné, qui pose les fichiers neufs et dit son numéro dans <code>VERSION</code> ; il l'inscrit dans le
+<code>.env</code>, puis se relance depuis le <code>setup.sh</code> neuf, qui fait une installation ordinaire en place :
+verrou sur les mises à jour du système, <code>pull</code>, <code>up</code>, attente des quatre services. Mettre à jour
+un logiciel ne doit pas demander de recopier des commandes depuis une annonce. Le numéro donné
+peut être une étiquette d'instantané (<code>1.0.24-snapshot.3b88d19</code>, produite par une branche
+<code>release-test/**</code>) : l'outillage dit l'étiquette que la CI lui a donnée, et c'est elle que le
+compose du client tire, ce qui permet d'évaluer une branche sur la machine du client.</p>
+<p>Deux points qui ne se voient pas :</p>
+<ul>
+<li><strong>Le script se fait écraser pendant qu'il tourne.</strong> Bash lit son script au fil de l'eau, et
+  l'outillage remplace <code>setup.sh</code> au milieu de l'exécution. La première chose que fait <code>upgrade</code>
+  est de se copier dans un dossier temporaire et de se relancer depuis la copie, en gardant
+  <code>CAUSE_SCRIPT_ORIGINE</code> pour savoir pour quel dossier elle travaille. Le test écrase le script
+  pendant le passage : arriver au bout prouve que la copie est en place.</li>
+<li><strong><code>stable</code> est une étiquette que la CI déplace</strong>, dans <code>tag-release</code>, après que le backend et le
+  frontend sont au registre : elle ne désigne jamais une version dont une image manquerait. Les
+  images de l'application restent épinglées par numéro dans le <code>.env</code>, donc la traçabilité ne
+  change pas. Pour l'éditeur, livrer reste un seul geste : monter <code>env: VERSION</code> dans le flux
+  d'intégration continue.</li>
+<li><strong>L'outillage se tire à chaque fois, <code>--pull always</code>.</strong> <code>docker run</code> réutilise une étiquette
+  déjà présente en local sans regarder le registre : au CHU, le second <code>upgrade</code> a rejoué
+  l'outillage de la 1.0.21 alors que <code>stable</code> désignait la 1.0.22 depuis la veille. Le registre
+  était juste, le cache de la machine ne l'était pas. Une installation dont le <code>setup.sh</code> précède
+  ce correctif doit tirer l'étiquette à la main une fois, voir le manuel administrateur.</li>
+</ul>
+<p>Le registre privé reste la seule condition : sans <code>.env.ghcr</code>, <code>upgrade</code> s'arrête avant de
+toucher aux fichiers.</p>
+<p><code>poser.sh</code> est joué par un vrai <code>sh</code>, sans Docker. Deux de ses gardes viennent de ce qui a été
+constaté en conteneur le 18/10/2026 : lancé sans <code>--user</code>, Docker exécute le conteneur en root,
+et les fichiers posés appartenaient alors à root, si bien que le passage suivant échouait sur
+<code>cp: can't create ... File exists</code>. Les fichiers <strong>et les dossiers créés</strong> reviennent donc au
+propriétaire du dossier de données. Le contrôle par mutation a par ailleurs montré qu'un de ces
+tests passait par accident, son assertion reconnaissant le mot « cible » dans le nom du dossier
+temporaire de pytest.</p>
+<h2 id="installer-depuis-les-sources">Installer depuis les sources<a class="headerlink" href="#installer-depuis-les-sources" title="Permanent link">&para;</a></h2>
+<p>Cette voie ne concerne que les machines qui construisent les images depuis les sources : poste de
+développement et laboratoire de l'éditeur. Un serveur client reçoit un disque de livraison, où le
+script et les modèles voyagent ensemble.</p>
+<h3 id="acces-au-depot">Accès au dépôt<a class="headerlink" href="#acces-au-depot" title="Permanent link">&para;</a></h3>
+<p>Le dépôt est privé et la machine reçoit une clé de déploiement en lecture seule. Générez une clé
+dédiée sur le serveur, sans phrase de passe, et déclarez-la comme clé de déploiement en lecture
+seule sur le dépôt GitHub.</p>
+<div class="highlight"><pre><span></span><code>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"cause-deploy"</span><span class="w"> </span>-f<span class="w"> </span>~/.ssh/cause_deploy
+cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.ssh/config<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">Host github.com</span>
+<span class="s">    IdentityFile ~/.ssh/cause_deploy</span>
+<span class="s">    IdentitiesOnly yes</span>
+<span class="s">EOF</span>
+cat<span class="w"> </span>~/.ssh/cause_deploy.pub
+ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</code></pre></div>
+<h3 id="construire-et-demarrer">Construire et démarrer<a class="headerlink" href="#construire-et-demarrer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:zero-filtre/cause.git
+<span class="nb">cd</span><span class="w"> </span>cause
+git<span class="w"> </span>fetch<span class="w"> </span>--tags
+git<span class="w"> </span>checkout<span class="w"> </span>v&lt;version&gt;
+sudo<span class="w"> </span>./scripts/setup.sh
+</code></pre></div>
+<p>La version à installer est le dernier tag publié. La première construction prend cinq à dix
+minutes.</p>
+<p>Chaque version publiée porte un tag git, et la mise à jour consiste à se placer sur le tag voulu
+et à reconstruire :</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>--tags
+git<span class="w"> </span>checkout<span class="w"> </span>v&lt;version&gt;
+docker<span class="w"> </span>compose<span class="w"> </span>build
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>Les données de <code>~/.cause/</code> ne sont pas touchées. Les fichiers de consultation sont migrés à la
+lecture si leur format a évolué.</p>
+<h3 id="ce-que-le-script-enchaine">Ce que le script enchaîne<a class="headerlink" href="#ce-que-le-script-enchaine" title="Permanent link">&para;</a></h3>
+<p>Le script est idempotent : le relancer ne casse rien, mais il réécrit certains fichiers qu'il
+gère.</p>
+<ol>
+<li><strong>Docker et le plugin Compose</strong>, installés s'ils manquent. Votre utilisateur est ajouté au
+   groupe <code>docker</code>, ce qui impose un redémarrage.</li>
+<li><strong>Pilote NVIDIA</strong>. Si aucun pilote n'est présent, le script installe <code>nvidia-driver-550</code>. Sur
+   les cartes récentes de génération Blackwell, par exemple la RTX 5060 Ti, ce pilote fermé ne
+   fonctionne pas : seul le module ouvert convient, installé en DKMS pour survivre aux mises à
+   jour du noyau. Un redémarrage est demandé si le pilote vient d'être posé.</li>
+<li><strong>NVIDIA Container Toolkit</strong>, puis un test <code>docker run --gpus all</code> avec <code>nvidia-smi</code>.</li>
+<li><strong>Répertoires</strong> sous <code>~/.cause/</code>, et écriture de <code>CAUSE_HOME</code> dans le fichier <code>.env</code> du dépôt,
+   ou dans <code>~/.cause/.env</code> quand le script est lancé depuis un disque. Seule cette ligne est
+   réécrite : sur un serveur livré, le même fichier porte la version et le modèle.</li>
+<li><strong>Matériel de livraison</strong> : lancé depuis un disque, le script reconnaît le sien et ne demande
+   rien ; lancé depuis <code>~/.cause</code>, il se sait en place, retient le compose du client et ne
+   cherche aucun disque. Lancé depuis le dépôt, et seulement là, il cherche un disque externe
+   portant un dossier <code>livraison-cause-&lt;version&gt;</code>, propose ce qu'il trouve, et accepte aussi un
+   chemin saisi à la main ; laisser vide construit les images depuis les sources, ce qui est le
+   mode de développement. Voir
+   <a href="#trois-endroits-dou-le-script-se-lance">Trois endroits d'où le script se lance</a>.</li>
+<li><strong>Variables backend</strong> : le fichier <code>.env.backend</code> est généré à partir de votre environnement,
+   et votre fichier de réglages <code>.env.backend.overrides</code> est créé s'il n'existe pas, puis laissé
+   intact. Puis la <strong>remontée des évaluations</strong> : le script nomme votre installation avec le
+   numéro de licence de la machine, lu dans <code>~/.cause/licence.lic</code>, et ne vous demande ce nom que
+   si la licence n'est pas encore émise. Il vous demande ensuite les deux clés du stockage de
+   l'éditeur, la secrète en saisie masquée, et les pose dans le <code>.env.backend</code> qu'il génère, où il
+   les reprend à chaque passage suivant. Votre fichier de réglages n'est pas touché : il ne doit
+   porter que ce que vous y avez écrit. Un second passage ne vous demande rien et ne change rien.
+   Sans personne devant la machine, rien n'est demandé et rien n'est écrit ;
+   <code>CAUSE_SANS_QUESTIONS=1</code> supprime ces questions pour une installation en série.</li>
+<li><strong>Portainer</strong> sur <code>https://127.0.0.1:9443</code>, dont le compte se crée au premier accès.</li>
+<li><strong>Certificat HTTPS</strong> si le fichier <code>desec.ini</code> est présent.</li>
+<li><strong>Construction et démarrage</strong> des quatre images, ou, sur un serveur livré, chargement des
+   moteurs depuis le disque et tirage du backend et du frontend depuis le registre. Le script
+   attend ensuite que chaque service soit en bonne santé, dans l'ordre Whisper, Ollama, backend,
+   frontend, puis que le modèle Ollama soit téléchargé, ce qui peut prendre jusqu'à une heure
+   selon la connexion.</li>
+<li><strong>Sources d'empreinte machine</strong> : le script vérifie que les trois fichiers d'identité sont
+    lisibles <em>dans</em> le conteneur backend et le dit. Une source manquante n'est qu'un
+    avertissement, deux sont un échec : en production le serveur refuserait de démarrer.</li>
+<li><strong>Hotspot Wi-Fi</strong> nommé <code>Cause</code>, sans mot de passe, avec des QR codes imprimables dans
+    <code>~/.cause/qrcodes/print.html</code>. Le script reconnaît le gestionnaire réseau de la machine,
+    NetworkManager ou netplan avec <code>systemd-networkd</code>, et refuse de reprendre l'interface qui
+    porte votre session SSH ou la route par défaut. Désactivez l'étape avec <code>CAUSE_NO_HOTSPOT=1</code>.</li>
+</ol>
+<h3 id="les-deux-familles-de-gestionnaire-reseau">Les deux familles de gestionnaire réseau<a class="headerlink" href="#les-deux-familles-de-gestionnaire-reseau" title="Permanent link">&para;</a></h3>
+<p>Prendre l'interface Wi-Fi n'est pas le même geste selon qui la tient. Le script reconnaît deux
+familles, et nomme le cas où il n'en reconnaît aucune.</p>
+<table>
+<thead>
+<tr>
+<th>Ce que le script trouve</th>
+<th>Ce qu'il fait de l'interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nmcli</code> présent et <code>NetworkManager</code> actif</td>
+<td>Pose <code>/etc/NetworkManager/conf.d/99-unmanaged-&lt;iface&gt;.conf</code> et recharge NetworkManager.</td>
+</tr>
+<tr>
+<td><code>systemd-networkd</code> actif (machine en netplan)</td>
+<td>Arrête et masque <code>netplan-wpa-&lt;iface&gt;.service</code>, puis pose <code>/etc/systemd/network/00-cause-hotspot-&lt;iface&gt;.network</code> avec <code>Unmanaged=yes</code>. Ce fichier est dans <code>/etc</code>, qui prime sur le <code>/run</code> où netplan engendre le sien : vos fichiers netplan ne sont jamais réécrits.</td>
+</tr>
+<tr>
+<td>ni l'un ni l'autre</td>
+<td>L'étape échoue en le disant : personne à qui demander l'interface. Installez avec <code>CAUSE_NO_HOTSPOT=1</code>, ou démarrez l'un des deux gestionnaires.</td>
+</tr>
+</tbody>
+</table>
+<p>Le retour en Wi-Fi client défait tout ce que posait le point d'accès : <code>back_to_wifi_client.sh</code>
+arrête <code>hostapd</code>, <code>dnsmasq</code> et <code>cause-hotspot-ip</code>, retire les deux marqueurs <code>unmanaged</code> et le
+masque de <code>netplan-wpa-&lt;iface&gt;.service</code>, puis rend l'interface au gestionnaire actif. Le réseau de
+station reste déclaré là où il l'était, dans <code>/etc/netplan/</code>.</p>
+<h2 id="les-prerequis-et-ce-qui-les-dicte">Les prérequis, et ce qui les dicte<a class="headerlink" href="#les-prerequis-et-ce-qui-les-dicte" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Ubuntu 24.04 ou plus récent</strong>, 26.04 sur le serveur du CHU. Le script d'installation utilise
+  <code>apt</code>, <code>systemd</code> et <code>dpkg</code> ; aucune autre distribution n'est prise en charge.</li>
+<li><strong>Python 3</strong>, présent d'origine sur Ubuntu. Le script d'installation lui confie la lecture des
+  valeurs déclarées dans les fichiers d'environnement, par le <code>contexte.py</code> que le disque de
+  livraison apporte à côté de lui ; l'outil de sauvegarde en a besoin lui aussi.</li>
+<li><strong>Un GPU NVIDIA</strong>. La configuration de référence est une carte de 16 Go de VRAM, sur laquelle
+  gemma4:12b et Whisper large-v3 cohabitent.</li>
+<li><strong>Un accès Internet pendant l'installation</strong>, même lent : dépôts Ubuntu, Docker et NVIDIA pour
+  les paquets du système, puis le registre pour les images du backend et du frontend, et Hugging
+  Face pour le cache du modèle d'embedding, qui pèse 553 Mo et se reconstruit seul. Avec un disque
+  de livraison, ni les modèles ni les images des trois moteurs ne sont téléchargés : ils viennent
+  du disque, et c'est ce qui rend l'installation possible sur un lien de 1 à 2 Mb/s.</li>
+<li><strong>Une soixantaine de gigaoctets libres</strong> : les modèles occupent trente gigaoctets dans
+  <code>~/.cause/</code>, dont 4,4 pour le second modèle de transcription, et les images vingt-quatre de plus
+  sous <code>/var/lib/docker</code>, dont seize et demi pour Whisper et Ollama et 6,9 pour Qwen3-ASR. Ce
+  dernier chiffre est ce que les fichiers de l'image posent une fois dépliés, et non les 10,5 Go
+  que <code>docker images</code> annonce, qui sont la somme de ses couches.</li>
+</ul>
+<h2 id="la-machine-hote">La machine hôte<a class="headerlink" href="#la-machine-hote" title="Permanent link">&para;</a></h2>
+<h3 id="les-mises-a-jour-du-systeme-ne-se-subissent-pas">Les mises à jour du système ne se subissent pas<a class="headerlink" href="#les-mises-a-jour-du-systeme-ne-se-subissent-pas" title="Permanent link">&para;</a></h3>
+<p>Les mises à jour des paquets du système ne se subissent pas, elles se décident : tout ce qui est
+automatique est coupé, et l'installation se fait à la main dans une fenêtre de maintenance qui se
+termine par un redémarrage et une vérification. Une mise à jour de sécurité peut avancer les
+bibliothèques NVIDIA en laissant le module noyau en arrière, auquel cas le GPU devient inutilisable
+jusqu'au redémarrage ; les conteneurs déjà debout continuent de tourner et seuls les nouveaux
+échouent, ce qui rend la panne trompeuse pour qui regarde l'écran.</p>
+<h3 id="ce-que-linstallation-coupe-et-pourquoi-cest-elle">Ce que l'installation coupe, et pourquoi c'est elle<a class="headerlink" href="#ce-que-linstallation-coupe-et-pourquoi-cest-elle" title="Permanent link">&para;</a></h3>
+<p>Un serveur livré a les minuteurs d'Ubuntu actifs par défaut : si la coupure vivait dans une page
+du manuel, la machine mettrait à jour jusqu'à ce que quelqu'un la lise. C'est donc <code>setup.sh</code> qui
+la pose, à chaque passage, dans <code>verrouiller_les_mises_a_jour</code> : rejouer l'installation remet le
+verrou, et c'est ainsi que l'administrateur referme une fenêtre de maintenance.
+<code>CAUSE_NO_UPDATE_LOCK=1</code> en dispense un poste de développement.</p>
+<p>Ubuntu met à jour par <code>unattended-upgrades</code>, appelé par deux minuteurs systemd et commandé par
+des fichiers de <code>/etc/apt/apt.conf.d/</code>. Trois gestes, parce qu'aucun ne suffit seul.</p>
+<p><strong>Masquer les unités.</strong> <code>apt-daily.timer</code> rafraîchit les listes de paquets,
+<code>apt-daily-upgrade.timer</code> lance l'installation, et <code>unattended-upgrades.service</code> reprend les mises
+à jour en attente à l'extinction de la machine. <code>mask</code> et non <code>disable</code>, parce qu'une
+réinstallation du paquet réactive un minuteur seulement désactivé. <code>fwupd-refresh.timer</code> et
+<code>ua-timer.timer</code> sont masqués avec eux : inoffensifs, ils tentent le réseau et polluent les
+journaux d'une machine hors ligne.</p>
+<p><strong>Mettre les interrupteurs à zéro.</strong> Le script écrit <code>99cause-maintenance</code>, dernier fichier lu du
+dossier, avec <code>APT::Periodic::Update-Package-Lists "0"</code>, <code>APT::Periodic::Unattended-Upgrade "0"</code> et
+<code>Unattended-Upgrade::Automatic-Reboot "false"</code>. Il l'emporte ainsi sur <code>10periodic</code> et
+<code>20auto-upgrades</code>, qui portent les mêmes clés sur une installation ordinaire, et sur
+<code>50unattended-upgrades</code> ou tout <code>5x-local</code> où un redémarrage automatique est le plus souvent
+déclaré : plutôt que chercher et supprimer les fichiers d'un administrateur précédent, le script
+pose le dernier mot. <code>apt-config dump</code> est le seul témoin qui vaille : il rend la valeur
+effective, tous les fichiers fusionnés dans l'ordre, et non ce qu'un fichier déclare.</p>
+<p><strong>Retenir snapd.</strong> Ubuntu Server livre snapd, qui a son propre rafraîchissement automatique :
+<code>snap refresh --hold</code> sans argument retient tous les snaps sans échéance. Sans ce geste la
+procédure n'est automatique qu'à moitié.</p>
+<p>Par-dessus, <code>geler_la_pile_du_pilote</code> pose <code>apt-mark hold</code> sur tout ce qui porte <code>nvidia</code>,
+<code>linux-image</code>, <code>linux-headers</code> ou <code>linux-modules</code>. C'est la vraie ceinture de sécurité,
+indépendante des minuteurs : elle tient même si l'un d'eux revenait.</p>
+<h3 id="lever-le-verrou-le-temps-dune-fenetre">Lever le verrou le temps d'une fenêtre<a class="headerlink" href="#lever-le-verrou-le-temps-dune-fenetre" title="Permanent link">&para;</a></h3>
+<p><code>install_system_upgrades.sh</code>, livré dans <code>outils/</code>, est l'opération symétrique : il arrête la
+pile, lève le gel sur les seuls paquets que l'installation a gelés (un gel posé par
+l'administrateur pour ses raisons reste), dégèle les snaps, puis rafraîchit, montre ce qui attend
+avec la simulation et demande l'accord. Le gel doit être levé avant de chercher, sans quoi la
+simulation ne verrait pas la pile du pilote. Un refus, ou une entrée fermée, n'installe rien.
+Dans les deux cas le script remet le gel avant de rendre la main : il laisse la machine comme il
+l'a trouvée, en plus à jour, et l'administrateur n'a aucun état intermédiaire à retenir. S'il
+remontait la pile par <code>docker compose up -d</code> plutôt que par <code>setup.sh</code>, le serveur resterait
+protégé. Le gel se recalcule sur les paquets installés, par le même motif appliqué à
+<code>dpkg-query</code>, et non sur la liste levée au départ : un nouveau noyau amène des <code>linux-image-*</code>
+et <code>linux-modules-nvidia-*</code> qui n'existaient pas avant et doivent l'être. <code>setup.sh</code>, rejoué
+après le redémarrage, repose le même gel, ce qui ne change rien, et vérifie le pilote avant de
+remonter la pile. La liste des paquets gelés est déclarée à l'identique dans les deux scripts,
+<code>PAQUETS_A_GELER</code>, et un test le vérifie.</p>
+<p>Les tests de la chaîne sont dans <code>scripts/livraison/test_setup_mises_a_jour.py</code>, sur des binaires
+de théâtre : <code>sudo</code> n'exécute rien et note ce qu'on lui a demandé, <code>dpkg-query</code> et
+<code>apt-mark showhold</code> récitent une machine imaginaire.</p>
+<h3 id="lire-ce-qui-est-en-attente">Lire ce qui est en attente<a class="headerlink" href="#lire-ce-qui-est-en-attente" title="Permanent link">&para;</a></h3>
+<p>Le canal se lit après la barre oblique du nom de paquet, <code>&lt;nom-de-code&gt;-updates</code> pour une mise à
+jour ordinaire et <code>&lt;nom-de-code&gt;-security</code> pour une mise à jour de sécurité. Le nom de code est
+celui de la version installée, que <code>. /etc/os-release &amp;&amp; echo $VERSION_CODENAME</code> donne :
+<code>resolute</code> sur le serveur du CHU, en 26.04. Un même correctif étant souvent publié dans les deux
+canaux, c'est le second nombre d'<code>apt-check</code> qui dit combien relèvent de la sécurité, <code>14;0</code> se
+lisant quatorze mises à jour dont aucune de sécurité.</p>
+<p>Deux familles de lignes sont à chercher dans cette liste, parce qu'elles imposent un redémarrage :
+celles qui portent <code>nvidia</code>, et celles qui portent <code>linux-image</code>, <code>linux-headers</code> ou
+<code>linux-modules</code>. Après coup, le système le dit lui-même : le fichier <code>/var/run/reboot-required</code>
+existe tant qu'un redémarrage est dû.</p>
+<p><code>dist-upgrade</code> et non <code>upgrade</code>, pour que les nouveaux paquets qu'un noyau amène soient installés
+plutôt que retenus. Le résumé qu'<code>apt</code> affiche avant de demander confirmation doit correspondre à la
+simulation déjà lue : une suppression de paquet non prévue est un motif d'arrêt.</p>
+<p>Au retour, la pile ne remonte pas seule, <code>down</code> ayant supprimé les conteneurs. <code>nvidia-smi</code> passe
+en premier, avant de démarrer quoi que ce soit : il doit nommer la carte et une version de pilote,
+et non répondre « No devices were found » ni
+<code>Failed to initialize NVML: Driver/library version mismatch</code>. <code>dkms status</code> le suit : un nouveau
+noyau sans rebuild du module Wi-Fi MT7927 fait perdre le point d'accès des tablettes en silence.
+Le serveur n'est rendu aux médecins qu'après ces témoins.</p>
+<h3 id="le-gel-de-la-pile-du-pilote">Le gel de la pile du pilote<a class="headerlink" href="#le-gel-de-la-pile-du-pilote" title="Permanent link">&para;</a></h3>
+<p>Les paquets que l'installeur de pilote d'Ubuntu gèle de lui-même ne couvrent que les <strong>modules</strong>
+(<code>linux-modules-nvidia-595-*</code>), pas les bibliothèques (<code>libnvidia-gl-595</code>,
+<code>nvidia-compute-utils-595</code>, <code>libnvidia-cfg1-595</code>). Le module chargé reste celui du dernier
+démarrage, et rien ne rattrape l'écart sans redémarrage. D'où le gel de toute la pile, et non de
+ses seuls modules, que <code>setup.sh</code> pose sur un serveur livré.</p>
+<p>Avec des modules précompilés, chaque nouveau noyau arrive sans le module NVIDIA dès lors que les
+paquets du pilote sont gelés. Le paquet <code>nvidia-dkms-595-open</code> recompile le module à chaque
+changement de noyau et lève ce défaut ; il exige les en-têtes du noyau HWE et le Secure Boot
+désactivé.</p>
+<p>La marche à suivre côté exploitation est dans
+<a href="../administrateur/depannage.html#gpu">Dépannage GPU</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1997 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Manuels utilisateur, administrateur et développeur de Kauze">
+      
+      
+      
+        <link rel="canonical" href="https://manuels.kauze.tech/developpeur/tests.html">
+      
+      
+        <link rel="prev" href="deploiement.html">
+      
+      
+        <link rel="next" href="regles-metier.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/kauze.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Tests et intégration continue - Manuels Kauze</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tests-et-integration-continue" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../index.html" title="Manuels Kauze" class="md-header__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Manuels Kauze
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tests et intégration continue
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au thème sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer au thème clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au thème clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Manuels Kauze" class="md-nav__button md-logo" aria-label="Manuels Kauze" data-md-component="logo">
+      
+  <img src="../assets/kauze.png" alt="logo">
+
+    </a>
+    Manuels Kauze
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuels Kauze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilisateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel utilisateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/compte.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compte et connexion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/infirmier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parcours infirmier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/actes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les actes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/enregistrer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enregistrer une consultation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/dicter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicter son rapport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/rapports.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les rapports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/editer-valider-exporter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Éditer, valider, exporter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/verrou.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Le verrou de visibilité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilisateur/questions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Questions fréquentes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Administrateur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Administrateur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel administrateur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/https.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/licence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La licence machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/donnees.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Données et sauvegarde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/comptes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comptes et patients
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/actes-et-prompts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actes, prompts et templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/modeles-pdf.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/exploitation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../administrateur/depannage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Développeur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Développeur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuel développeur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vue-ensemble.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contrats API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="whisper.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services de transcription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="frontend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="configuration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deploiement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Déploiement, certificat et machine hôte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests et intégration continue
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="tests.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tests et intégration continue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#le-developpement-dirige-par-les-tests-est-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le développement dirigé par les tests est obligatoire
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lancer-les-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lancer les tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lancer-une-campagne-de-mesure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lancer une campagne de mesure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-tournent-les-scenarios-cucumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment tournent les scénarios Cucumber
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-continue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intégration continue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-garde-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le garde de version
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-publication-des-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La publication des images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-retention-du-registre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La rétention du registre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-tag-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le tag de version
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="regles-metier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Règles métier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scripts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="documentation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    La documentation elle-même
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#le-developpement-dirige-par-les-tests-est-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le développement dirigé par les tests est obligatoire
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lancer-les-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lancer les tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lancer-une-campagne-de-mesure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lancer une campagne de mesure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-tournent-les-scenarios-cucumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment tournent les scénarios Cucumber
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-continue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intégration continue
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-garde-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le garde de version
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-publication-des-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La publication des images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-retention-du-registre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La rétention du registre
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#le-tag-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le tag de version
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tests-et-integration-continue">Tests et intégration continue<a class="headerlink" href="#tests-et-integration-continue" title="Permanent link">&para;</a></h1>
+<h2 id="le-developpement-dirige-par-les-tests-est-obligatoire">Le développement dirigé par les tests est obligatoire<a class="headerlink" href="#le-developpement-dirige-par-les-tests-est-obligatoire" title="Permanent link">&para;</a></h2>
+<p>La règle du dépôt ne se discute pas : le test s'écrit avant le code de production. Le cycle
+est d'écrire le test, le voir échouer <strong>pour la bonne raison</strong>, écrire le minimum de code qui
+le fait passer, puis remanier à vert.</p>
+<p>La couverture attendue : un test bout en bout par critère d'acceptation, en Cucumber côté
+backend et avec Testing Library côté frontend, des tests unitaires pour la logique métier, et
+des tests d'intégration pour la couche de persistance.</p>
+<p>Supprimer une fonctionnalité, c'est supprimer ses tests. On n'écrit pas de test vérifiant
+qu'un élément a disparu, sauf quand l'absence exprime une règle vivante, par exemple un
+élément masqué selon le rôle.</p>
+<h2 id="lancer-les-tests">Lancer les tests<a class="headerlink" href="#lancer-les-tests" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>backend<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mvn<span class="w"> </span>verify
+</code></pre></div>
+<p>Attention : <code>mvn test</code> ne lance <strong>que</strong> les tests unitaires. Les scénarios Cucumber sont des
+tests d'intégration exécutés en phase de vérification. Toujours utiliser <code>mvn verify</code>, et
+<code>mvn</code> jamais <code>mvnw</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>frontend
+npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
+npx<span class="w"> </span>vitest<span class="w"> </span>run
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>scripts/faster-whisper
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-test.txt
+pytest<span class="w"> </span>-v
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>scripts/qwen-asr
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-test.txt
+pytest<span class="w"> </span>-v
+</code></pre></div>
+<p>Le travail <code>test-transcription</code> joue les deux suites, celle de Whisper puis celle de Qwen3-ASR.
+Toutes deux simulent le moteur et ne demandent ni carte graphique, ni réseau, ni les 4,4 Go du
+modèle.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>scripts/mesure
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-test.txt
+pytest<span class="w"> </span>-q
+</code></pre></div>
+<h2 id="lancer-une-campagne-de-mesure">Lancer une campagne de mesure<a class="headerlink" href="#lancer-une-campagne-de-mesure" title="Permanent link">&para;</a></h2>
+<p>Porte d'entrée unique, <code>scripts/cause</code>, supposé dans le <code>PATH</code> ci-dessous (voir
+<a href="scripts.html#le-point-dentree">Scripts</a>).</p>
+<p><strong>Qualité</strong>, depuis le poste de l'éditeur : la rédaction tourne sur la machine mesurée, la
+notation reste ici, puisque le juge <code>claude -p</code> n'est authentifié que sur ce poste.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CIBLE</span><span class="o">=</span>http://192.168.1.138:8090<span class="w"> </span><span class="nv">OLLAMA_URL</span><span class="o">=</span>http://192.168.1.138:11434<span class="w"> </span><span class="se">\</span>
+<span class="nv">MATERIEL</span><span class="o">=</span>2x16GBVram_32GBRAM<span class="w"> </span><span class="nv">CAUSE_HOME</span><span class="o">=</span>~/.cause/test-corpus<span class="w"> </span><span class="se">\</span>
+<span class="nv">CAUSE_USER</span><span class="o">=</span>admin<span class="w"> </span><span class="nv">CAUSE_PASSWORD</span><span class="o">=</span>...<span class="w"> </span><span class="se">\</span>
+cause<span class="w"> </span>mesurer<span class="w"> </span>qualite<span class="w"> </span>gemma4:26b
+</code></pre></div>
+<ul>
+<li><code>CIBLE</code> et <code>OLLAMA_URL</code> : la machine mesurée. <code>MATERIEL</code> : son tag, qui ne se déduit pas à
+  distance et nomme le rapport.</li>
+<li><code>CAUSE_HOME</code> : le corpus, <code>~/.cause/test-corpus</code>, tenu à part du magasin de développement.</li>
+<li>Chaque consultation part dans le corps de la requête. La machine mesurée ne la porte pas, ne la
+  garde pas, et le rapport produit revient dans la réponse sans y être écrit : un serveur en
+  service se note pendant qu'il soigne.</li>
+<li>Sortie : <code>docs/benchmarks/benchmark_&lt;materiel&gt;_&lt;modele&gt;_&lt;date&gt;.md</code>.</li>
+<li>La ligne du tableau dit <strong>deux</strong> comptes, et pas un : <code>Rapports OK</code> compte les rapports que la
+  machine mesurée a rédigés, <code>Notés</code> ceux que le juge a réellement notés, c'est-à-dire ceux sur
+  lesquels porte la moyenne. Un rapport vide n'est pas une réussite, un rapport non noté ne
+  disparaît pas en silence, et le verdict porte la mention quand il en reste. Le défaut inverse
+  est passé deux fois le 16/10/2026 dans un tableau destiné à l'Annexe 1 d'un contrat ; c'est
+  pourquoi <code>scripts/mesure/test_campagne_qualite.py</code> joue la campagne entière contre un juge et
+  une pile de théâtre, et tient ces propriétés.</li>
+<li>Un modèle trop lent et un modèle fautif ne mènent pas à la même décision : le premier descend
+  d'un cran de quantisation, le second est un défaut à corriger. Les délais dépassés ont donc
+  leur propre compte, distinct des erreurs.</li>
+<li>Un juge qui ne rend rien d'exploitable a droit à une seconde tentative, puis le dossier sort de
+  la moyenne et le journal nomme la cause : pas de sortie, ou réponse hors JSON.</li>
+<li><code>RESUME_JSON=&lt;chemin&gt;</code> fait déposer le verdict de la campagne en données à côté du tableau,
+  ce que lit la cadence.</li>
+</ul>
+<p><strong>Cadence</strong>, le rendez-vous qui fait voir une dérive sans que personne y pense : la même
+campagne, suivie de la confrontation de sa note à la référence posée.</p>
+<div class="highlight"><pre><span></span><code>cause<span class="w"> </span>mesurer<span class="w"> </span>cadence<span class="w"> </span>gemma4:26b
+</code></pre></div>
+<ul>
+<li>Code de sortie 0 quand la note tient, <strong>70</strong> sur dérive, <strong>78</strong> quand il n'y a rien à comparer :
+  aucune référence posée, campagne sans aucune note, ou juge changé depuis la pose. Le dernier
+  verdict reste lisible, daté, dans <code>$CAUSE_HOME/mesure/derniere-cadence.json</code>.</li>
+<li><strong>Le seuil est à 0,3 sur dix.</strong> Trois passages du même modèle sur le même corpus s'écartent de
+  0,12 : c'est le bruit de la mesure, et deux campagnes comparées le portent chacune, donc leur
+  écart se disperse d'environ 0,17. Un seuil posé sous ce bruit crierait sur la mesure elle-même,
+  et une alerte qui crie pour rien s'apprend à être ignorée. L'écart de 0,18 entre le 26b et le
+  31b, sur lequel le 26b a été conservé, ne déclenche donc rien.</li>
+<li>Une moyenne portée par moins de dossiers que la référence est une alerte à part entière : deux
+  notes calculées sur des socles différents ne se comparent pas.</li>
+<li><strong>La référence se repose</strong>, et c'est ce qu'exige tout changement voulu de prompt, de modèle ou
+  de corpus : elle vit dans <code>$CAUSE_HOME/mesure/reference-qualite.json</code>, auprès du corpus qui l'a
+  produite, et ne se tape jamais à la main. <code>--reposer "&lt;motif&gt;"</code> joue une campagne et pose sa
+  note, avec le motif qui dit ce qui périmait la précédente.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>cause<span class="w"> </span>mesurer<span class="w"> </span>cadence<span class="w"> </span>gemma4:26b<span class="w"> </span>--reposer<span class="w"> </span><span class="s2">"constantes vitales sorties du corps du rapport"</span>
+</code></pre></div>
+<ul>
+<li>Le rendez-vous est un timer systemd <strong>utilisateur sur la machine du laboratoire</strong>, imprimé prêt
+  à installer par <code>cause mesurer cadence --rendez-vous</code>, avec la liste de ce qu'il suppose allumé :
+  pile debout, modèle tiré, <code>claude /login</code> fait pour ce compte, <code>loginctl enable-linger</code> pour que
+  le trousseau du juge survive à la déconnexion, identifiants dans un fichier d'environnement en
+  0600, et une référence déjà posée. La mesure ne va pas dans la CI GitHub, qui n'a ni carte
+  graphique, ni corpus, ni juge authentifié, et où une campagne coûterait des minutes de machine
+  à chaque poussée.</li>
+</ul>
+<p><strong>Charge</strong>, sur la machine mesurée elle-même, qui chronomètre ses latences et échantillonne son
+GPU ; une cible distante est refusée.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CHARGE_PASSWORD</span><span class="o">=</span>...<span class="w"> </span><span class="nv">MATERIEL</span><span class="o">=</span>2x16GBVram_32GBRAM<span class="w"> </span>cause<span class="w"> </span>mesurer<span class="w"> </span>charge
+</code></pre></div>
+<ul>
+<li>20 dictées simultanées de 30 portions sur la pile déjà debout, environ 40 minutes.</li>
+<li><code>ENGINE</code>, <code>MUTEX</code>, <code>WORKERS</code> <strong>décrivent</strong> la pile en place, ils ne la configurent pas.</li>
+<li>Sortie : <code>docs/benchmarks/perf/&lt;nom-du-run&gt;/</code>.</li>
+</ul>
+<p>Mesurer une machine qui n'est pas celle-ci se fait par <code>--sur &lt;hôte&gt;</code>, où l'hôte est un alias
+ssh :</p>
+<div class="highlight"><pre><span></span><code><span class="nv">CHARGE_PASSWORD</span><span class="o">=</span>...<span class="w"> </span>cause<span class="w"> </span>mesurer<span class="w"> </span>charge<span class="w"> </span>--sur<span class="w"> </span>chu
+</code></pre></div>
+<p>Seule l'orchestration devient distante. La commande dépose sur l'hôte de quoi jouer la campagne
+(<code>scripts/perf/</code>, <code>scripts/mesure/mesure.py</code> et <code>mesurer.sh</code>, <code>scripts/outils/contexte.py</code>, le
+fichier de flux qui porte la version), y joue <code>cause mesurer charge</code> sans <code>--sur</code>, rapatrie
+<code>docs/benchmarks/perf/</code> dans le dépôt local, puis efface son dépôt. Les refus préalables jouent
+donc <strong>sur la machine mesurée</strong>, seule où ils ont un sens : c'est sa pile, son Ollama et ses
+cartes qu'ils interrogent.</p>
+<p>Le rapatriement est la raison d'être de l'option. Joué à la main, le geste s'oublie, et le
+rapport meurt dans un dossier du serveur du client.</p>
+<p>Le mot de passe du médecin de charge ne figure nulle part dans une ligne de commande : <code>ps</code> la
+donne à tout compte de la machine, et le serveur d'un hôpital a plusieurs administrateurs. Il
+voyage par <code>CHARGE_PASSWORD</code> (ou <code>ADMIN_PASSWORD</code>) dans l'environnement, que seul son
+propriétaire lit, ou sur l'entrée standard. Une commande ssh étant une ligne de commande de
+plus sur la machine distante, c'est l'entrée standard qui le porte jusqu'à elle.</p>
+<p>Le juge et le tag matériel viennent du contexte partagé (<code>scripts/outils/contexte.py</code>), jamais
+d'une valeur par défaut : un juge qui change rend les campagnes incomparables, un tag constant
+nomme les rapports de la mauvaise machine.</p>
+<p>Les deux commandes <strong>refusent de démarrer plutôt que de deviner</strong>, en code 78, avant la première
+dépense. Cinq refus : juge non épinglé ou inconnu, consultation du corpus sans aucun segment sur
+la piste mesurée, modèle absent d'Ollama sur la cible, dépendance python manquante, tag matériel
+indéductible. Une campagne coûte six heures de machine et ses chiffres partent en Annexe 1 d'un
+contrat ; ces refus vivent dans <code>scripts/mesure/mesure.py</code> et c'est là que sont leurs tests.</p>
+<p>Un acte que la piste mesurée ne concerne pas n'est pas un refus : les actes que le référentiel
+déclare dictés seulement, bloc opératoire et compte rendu d'examen, sortent du corpus live en
+étant nommés. Le refus ne garde que les vrais trous, une consultation qui pourrait porter la
+piste et n'a rien dessus.</p>
+<p>Le harnais de charge vise une pile déjà debout, sur le port 8090 : plus de jar local ni de JDK,
+un serveur livré n'en a pas. Le mode historique reste disponible sur le poste de développement
+par <code>MODE=jar</code>, qui démarre le backend sur un <code>user.home</code> jetable.</p>
+<h2 id="comment-tournent-les-scenarios-cucumber">Comment tournent les scénarios Cucumber<a class="headerlink" href="#comment-tournent-les-scenarios-cucumber" title="Permanent link">&para;</a></h2>
+<p>Le runner démarre l'application sur un port dédié avec le profil <code>test</code> et l'appelle en HTTP
+réel, avec un client Java standard. Ce ne sont pas des tests de contrôleur simulés : ils
+traversent toute la pile, sérialisation comprise.</p>
+<p>Les données de test sont isolées sous <code>target/test-data</code>, chargées depuis des fixtures :
+trois utilisateurs couvrant les trois rôles, deux patients, quelques consultations. Les
+workers de file ne démarrent pas sous ce profil, ce qui rend les scénarios déterministes.</p>
+<p>Les comparaisons de réponse JSON sont indulgentes : un scénario affirme les champs qui lui
+importent, pas la totalité du corps.</p>
+<p>Tous les scénarios ne passent pas par HTTP, et trois familles font exception.</p>
+<p>Le routage des moteurs de transcription (<code>asr-routing.feature</code>, étiqueté <code>@asr-routing</code>) n'a pas
+de route à appeler, puisqu'il décrit un choix de configuration : ses pas interrogent les beans du
+contexte et rendent les propriétés qu'ils ont posées.</p>
+<p>La remontée des évaluations (<code>remontee-evaluations.feature</code>, étiqueté <code>@remontee</code>) appelle les
+objets planifiés et un <strong>faux point de terminaison local</strong> monté par <code>MockWebServer</code> : aucun test
+ne joint le réseau, et la reprise s'éprouve contre un point de terminaison qui refuse les
+premières requêtes.</p>
+<p>La trace du glossaire (<code>glossaire-trace.feature</code>, étiqueté <code>@glossaire-trace</code>) construit le
+prompt par le service de rédaction, le travailleur asynchrone n'étant pas démarré en profil
+test, et capture le logger <code>glossaire</code> comme la trace d'audit capture le sien : ses pas lisent
+la ligne JSON et y vérifient la consultation, la piste, les candidats et l'absence de la
+transcription.</p>
+<p>Les trois remettent en place ce qu'ils ont posé après chaque scénario, le contexte Spring étant
+partagé.</p>
+<h2 id="integration-continue">Intégration continue<a class="headerlink" href="#integration-continue" title="Permanent link">&para;</a></h2>
+<p>Le flux se déclenche sur chaque poussée de branche, et à la main par <code>workflow_dispatch</code>. Il ne
+se déclenche plus sur la fusion d'une demande de tirage : l'équipe pousse en direct sur <code>main</code>,
+et ce déclencheur ne faisait plus que rejouer après coup les douze minutes de tests déjà passées
+à la poussée.</p>
+<p>Huit travaux de test tournent en parallèle : backend avec <code>mvn verify -B</code>, frontend avec
+<code>npx vitest run</code>, les deux serveurs de transcription avec <code>pytest -v</code>, puis cinq travaux Python
+sous <code>pytest -q</code>, l'émetteur de licences (<code>scripts/licence</code>), la baseline diagnostique
+(<code>scripts/diagnostic-baseline</code>), l'outil de sauvegarde (<code>scripts/sauvegarde</code>), la préparation
+d'un disque de livraison (<code>scripts/livraison</code>), et un dernier qui porte les conventions
+partagées (<code>scripts/outils</code>) et
+les refus qui gardent une campagne (<code>scripts/mesure</code>). <strong>Deux</strong> de ces travaux portent donc deux
+suites chacun, <code>test-transcription</code> (<code>scripts/faster-whisper</code>, <code>scripts/qwen-asr</code>) et
+<code>test-outils</code> : un travail de CI se paie à la minute entamée, même quand il dure neuf
+secondes. Les trois suites de <code>scripts/mesure</code> y tournent sans réseau, sans modèle et sans juge
+réel : des binaires factices en tête du <code>PATH</code> et une pile locale remplacent <code>curl</code>, <code>claude</code> et
+le backend. Un neuvième travail, sur poussée seulement, vérifie la dérive de la documentation. Quatre autres décident et exécutent une livraison : le
+garde de version, la publication des images, le ménage du registre, la pose du tag.</p>
+<p>Les outils scriptés ont leurs propres tests parce qu'ils décident de choses qu'on ne peut pas
+rejouer : une licence signée, un chiffre publié, une archive dont on dépendra le jour où les
+données auront disparu.</p>
+<p>Les tests qui démarrent un contexte Spring activent tous le profil <code>test</code>, sous lequel un bean de
+remplacement désarme la licence machine. Ce bean vit dans les sources de test, jamais dans le jar :
+c'est ce qui permet de compiler l'application du contrôle en dur sans rendre la suite
+inexécutable. Sur un serveur livré, activer ce profil ne contourne rien : il ne resterait aucun
+bean de licence et le contexte refuserait de démarrer.</p>
+<p>L'émetteur de licences est en Python et le lecteur en Java : les deux doivent s'accorder au
+caractère près sur la frontière de ce que la signature couvre. <code>LicenceInteropTest</code>, côté
+backend, relit un fichier réellement produit par le script et le vérifie avec la clé compilée ;
+le travail <code>test-licence</code> tient l'autre bout.</p>
+<h2 id="le-garde-de-version">Le garde de version<a class="headerlink" href="#le-garde-de-version" title="Permanent link">&para;</a></h2>
+<p><code>env: VERSION</code>, en tête du fichier de flux, est la source unique de la version. Le contexte
+partagé <code>scripts/outils/contexte.py</code> la lit sur ce fichier et la sert à qui en a besoin, dont la
+préparation du disque de livraison ; les images du registre la portent, le tag git la reprend. Elle est <strong>écrite à la main</strong>, et la monter fait partie de la préparation d'une
+livraison.</p>
+<p>Le travail <code>version-guard</code> la confronte aux tags déjà posés sur le dépôt. Les règles vivent dans
+<code>scripts/ci/version_guard.py</code> :</p>
+<ul>
+<li>une version qui n'est pas un <code>X.Y.Z</code> strict est refusée, sur n'importe quelle branche : elle
+  produirait une étiquette d'image qu'un <code>docker compose pull</code> ne trouverait jamais ;</li>
+<li>une version dont le tag <code>v&lt;version&gt;</code> existe déjà ne publie rien, et ce n'est pas une faute :
+  elle est déjà au registre ;</li>
+<li>une version strictement supérieure au plus grand tag existant publie ;</li>
+<li>une version en deçà est refusée : quelqu'un a oublié de monter le numéro, et le registre
+  garderait l'ancienne.</li>
+</ul>
+<p>La comparaison est numérique, composante par composante. En lexicographique, « 1.0.9 » dépasse
+« 1.0.12 » et le garde laisserait republier une version déjà passée ; un test tient cette
+propriété en place.</p>
+<p>Ce travail ne dépend d'aucun autre, et c'est volontaire : une version fautive doit se voir en
+quelques secondes, pas après douze minutes de tests. Sur <code>main</code>, un refus fait échouer le travail
+et rien ne part. Sur une autre branche, le verdict est seulement écrit dans le résumé du travail,
+pour qu'on puisse préparer une version sans être arrêté par elle.</p>
+<h2 id="la-publication-des-images">La publication des images<a class="headerlink" href="#la-publication-des-images" title="Permanent link">&para;</a></h2>
+<p>Le <code>docker-compose.yml</code> installé chez le client ne construit rien : il désigne
+<code>ghcr.io/zero-filtre/cause-backend</code> et <code>ghcr.io/zero-filtre/cause-frontend</code> à la version livrée.
+Le travail <code>publish-images</code> construit et pousse ces deux images en parallèle, après le garde et
+après les huit travaux de test. Tous, et non les seules deux qui couvrent le code embarqué :
+<code>test-livraison</code> garde la génération du compose du client et les noms d'images que cette
+publication alimente, et une version étiquetée alors qu'elle est rouge serait distribuée sans
+que rien ne l'arrête. Les deux jambes de la matrice sont indépendantes (<code>fail-fast: false</code>) :
+sans cela, un échec du backend à la neuvième minute annulerait le frontend et laisserait le
+registre à moitié à jour, sans tag pour le dire.</p>
+<p>Il ne tourne que si le garde a dit de publier, et seulement depuis <code>main</code>, depuis une branche
+<code>release-test/**</code>, ou sur un déclenchement manuel. Rien ne part sur une poussée de branche
+ordinaire : le registre se paie.</p>
+<p>L'étiquette publiée est la version nue depuis <code>main</code>, déclenchement manuel compris, et
+<code>&lt;version&gt;-snapshot.&lt;sha court&gt;</code> depuis toute autre référence. L'étiquette est donnée à la
+construction (<code>build-arg ETIQUETTE</code>), et l'outillage la dit dans son fichier <code>VERSION</code> à la place
+de la version nue : une installation peut donc tirer un instantané par
+<code>setup.sh upgrade &lt;étiquette&gt;</code>, pour évaluer une branche sur une machine réelle avant de la
+fondre dans <code>main</code>. Seule <code>main</code> produit une version nue et son tag, et c'est pourquoi
+<code>tag-release</code> suit aussi un déclenchement manuel depuis <code>main</code> : une version publiée sans son tag
+redeviendrait publiable, et le passage suivant la republierait sous un autre contenu. La version
+déclarée sur la branche doit dépasser la dernière publiée, sans quoi le garde ne publie rien.</p>
+<p><strong>Une étiquette déjà au registre n'est jamais réécrite.</strong> Le garde ne connaît que les tags git,
+et le tag n'est posé qu'après la publication : deux poussées rapprochées sur <code>main</code> verraient
+donc toutes deux le même numéro libre. Avant de construire, chaque jambe demande au registre s'il
+porte déjà l'étiquette, et s'abstient si oui, en le disant. Les deux jambes ne se marchent pas
+dessus non plus, chacune ayant son propre groupe de concurrence. La publication est ainsi
+rejouable : un passage relancé après un échec du backend ne republie que ce qui manque.</p>
+<p><code>provenance</code> et <code>sbom</code> sont coupés à la construction. Ce n'est pas une économie : ces deux
+options déposent au registre des manifestes sans étiquette, que la rétention prendrait pour des
+orphelins et effacerait, emportant avec eux des morceaux de l'image qu'on vient de publier.</p>
+<p>Les contextes de construction sont ceux du <code>docker-compose.yml</code>, et ils diffèrent. Le backend se
+construit depuis la racine du dépôt avec <code>backend/Dockerfile</code>, parce que le pom embarque
+<code>docs/manuel</code> dans le jar : un contexte limité à <code>backend/</code> produirait un jar sans documentation
+ni index de recherche, sans qu'aucune étape n'échoue. Le frontend se construit depuis <code>./frontend</code>
+avec l'argument <code>VITE_ERUDA=false</code>.</p>
+<p>L'authentification passe par le <code>GITHUB_TOKEN</code> du passage, avec <code>packages: write</code> et
+<code>contents: read</code> pour seules permissions. Il n'y a aucun secret à gérer.</p>
+<p><strong>À vérifier après la première publication</strong> : un paquet créé depuis un dépôt privé par le
+<code>GITHUB_TOKEN</code> naît privé et rattaché à ce dépôt. Le flux ne règle pas sa visibilité et n'a pas à
+le faire. Il faut la relire une fois dans les paquets de l'organisation <code>zero-filtre</code>, confirmer
+que les deux paquets sont bien privés, et que le dépôt y a le droit d'écrire et de supprimer.</p>
+<h2 id="la-retention-du-registre">La rétention du registre<a class="headerlink" href="#la-retention-du-registre" title="Permanent link">&para;</a></h2>
+<p>Chaque passage dépose quelques centaines de mégaoctets, et chaque reconstruction laisse derrière
+elle une version sans aucune étiquette que personne ne tirera jamais. Le travail <code>prune-images</code>
+suit la publication et efface, selon <code>scripts/ci/retention.py</code> : on garde les deux dernières
+versions stables, parce qu'un retour en arrière chez le client se fait vers la précédente et pas
+plus loin ; le dernier instantané seulement, parce qu'un instantané ne sert qu'à la branche qui
+vient de le produire ; rien de ce qui n'a plus d'étiquette. La version qu'on vient de publier
+n'est jamais effacée, même quand la règle la condamnerait.</p>
+<p>Ce travail est toléré en échec. Un refus de l'API des paquets ne doit pas faire échouer une
+livraison déjà publiée : les images sont au registre, le ménage attendra le passage suivant. Un
+refus sur une suppression est annoncé en avertissement, et le travail apparaît en échec dans la
+liste sans bloquer le passage : le droit de supprimer un paquet d'organisation n'est pas acquis
+pour le <code>GITHUB_TOKEN</code>, et c'est dans les journaux de ce travail qu'on le vérifie après la
+première publication.</p>
+<h2 id="le-tag-de-version">Le tag de version<a class="headerlink" href="#le-tag-de-version" title="Permanent link">&para;</a></h2>
+<p><code>tag-release</code> pose <code>v&lt;version&gt;</code> sur une poussée vers <code>main</code> ou sur un déclenchement manuel depuis
+<code>main</code>, après la publication des images et seulement si le garde a dit de publier. Dans cet ordre, pour qu'aucun tag ne désigne des images
+qui n'existent pas. Il est idempotent : un tag déjà présent est annoncé et le travail sort en
+vert. Le même travail déplace l'étiquette <code>stable</code> de <code>cause-outillage</code> sur la version publiée :
+c'est elle que <code>setup.sh upgrade</code> tire chez le client, et elle ne doit désigner qu'une version
+dont le backend et le frontend sont déjà au registre, d'où sa place ici et non dans la matrice de
+publication.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

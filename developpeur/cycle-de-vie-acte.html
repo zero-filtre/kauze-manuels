@@ -1,0 +1,312 @@
+<!doctype html>
+<!--
+  Cycle de vie d'un acte, référence vivante du flux d'enregistrement.
+
+  Ce fichier est la source, et la seule. On l'ouvre directement dans un navigateur,
+  on l'édite ici, et il suit le code dans git : toute évolution du cycle de vie
+  (statuts de piste, verrou de visibilité, règles d'annulation) se répercute dans ce
+  document au même commit que le code qui la porte.
+
+  Page autonome : aucune dépendance d'hébergement, seules les polices sont distantes
+  et une pile de repli est déclarée.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cycle de vie d'un acte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #F4F6F8;
+    --surface: #FFFFFF;
+    --surface-sunk: #EDF0F4;
+    --ink: #141A20;
+    --ink-muted: #57646F;
+    --ink-faint: #7C8894;
+    --rule: #D9E0E7;
+    --rule-strong: #BDC7D1;
+    --live: #2F6F8F;
+    --live-wash: #E6EFF4;
+    --dictated: #8C6224;
+    --dictated-wash: #F5EEE2;
+    --block: #A8474F;
+    --block-wash: #F8EBEC;
+    --ok: #2F6B4F;
+    --ok-wash: #E7F0EB;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10151A;
+      --surface: #171E25;
+      --surface-sunk: #1D252D;
+      --ink: #E3E9EF;
+      --ink-muted: #9AA7B4;
+      --ink-faint: #77838F;
+      --rule: #27313A;
+      --rule-strong: #3A4650;
+      --live: #6FB2D0;
+      --live-wash: #16262E;
+      --dictated: #D2A662;
+      --dictated-wash: #2A2318;
+      --block: #E0959B;
+      --block-wash: #2E1B1D;
+      --ok: #7FC3A0;
+      --ok-wash: #16261F;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #10151A;
+    --surface: #171E25;
+    --surface-sunk: #1D252D;
+    --ink: #E3E9EF;
+    --ink-muted: #9AA7B4;
+    --ink-faint: #77838F;
+    --rule: #27313A;
+    --rule-strong: #3A4650;
+    --live: #6FB2D0;
+    --live-wash: #16262E;
+    --dictated: #D2A662;
+    --dictated-wash: #2A2318;
+    --block: #E0959B;
+    --block-wash: #2E1B1D;
+    --ok: #7FC3A0;
+    --ok-wash: #16261F;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 66rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+  }
+  header p.kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.4rem;
+  }
+  h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 2rem;
+  }
+  h2 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 3rem 0 0.35rem;
+  }
+  p.note {
+    color: var(--ink-muted);
+    margin: 0 0 1.2rem;
+    max-width: 60ch;
+  }
+  figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  figure svg { display: block; min-width: 46rem; width: 100%; height: auto; }
+  svg text {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    fill: var(--ink);
+  }
+  svg .state-name { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 500; }
+  svg .edge-label { font-size: 11.5px; fill: var(--ink-muted); }
+  svg .edge { stroke: var(--rule-strong); stroke-width: 1.5; fill: none; }
+  svg .edge-dashed { stroke-dasharray: 5 4; }
+  svg .node { stroke: var(--rule-strong); }
+
+  dl.legend {
+    margin: 1rem 0 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1rem;
+    row-gap: 0.35rem;
+  }
+  dl.legend dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    align-self: start;
+    white-space: nowrap;
+  }
+  dl.legend dd { margin: 0; color: var(--ink-muted); }
+  dl.legend code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    background: var(--surface-sunk);
+    border-radius: 0.25rem;
+    padding: 0.05rem 0.3rem;
+  }
+  .chip {
+    display: inline-block;
+    border-radius: 0.3rem;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid var(--rule-strong);
+  }
+  .chip.progress { background: var(--live-wash); color: var(--live); }
+  .chip.ready { background: var(--ok-wash); color: var(--ok); }
+  .chip.error { background: var(--block-wash); color: var(--block); }
+  .chip.idle { background: var(--surface-sunk); color: var(--ink-muted); }
+  .chip.lock { background: var(--dictated-wash); color: var(--dictated); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Cause, dictée médicale</p>
+    <h1>Cycle de vie d'un acte</h1>
+  </header>
+
+  <h2>Cycle de vie d'une piste</h2>
+  <p class="note">
+    Le même automate vaut pour la piste LIVE (pré-rapport) et la piste DICTATED
+    (rapport du médecin). Les deux posent le même verrou de visibilité pendant
+    l'enregistrement.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 330" role="img" aria-label="Automate d'une piste : WAITING, IN_PROGRESS, GENERATING, REPORT_READY, ERROR, CANCELLED">
+      <defs>
+        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20"  y="70" width="140" height="46" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="90"  y="97" text-anchor="middle">WAITING</text>
+
+      <rect class="node" x="250" y="70" width="150" height="46" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="325" y="97" text-anchor="middle" fill="var(--live)">IN_PROGRESS</text>
+
+      <rect class="node" x="490" y="70" width="150" height="46" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="565" y="97" text-anchor="middle" fill="var(--live)">GENERATING</text>
+
+      <rect class="node" x="760" y="70" width="160" height="46" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="840" y="97" text-anchor="middle" fill="var(--ok)">REPORT_READY</text>
+
+      <rect class="node" x="420" y="230" width="120" height="46" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="480" y="257" text-anchor="middle" fill="var(--block)">ERROR</text>
+
+      <rect class="node" x="620" y="230" width="130" height="46" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="685" y="257" text-anchor="middle" fill="var(--ink-muted)">CANCELLED</text>
+
+      <line class="edge" x1="160" y1="93" x2="248" y2="93" marker-end="url(#arr)"/>
+      <text class="edge-label" x="204" y="84" text-anchor="middle">enregistrer</text>
+
+      <line class="edge" x1="400" y1="93" x2="488" y2="93" marker-end="url(#arr)"/>
+      <text class="edge-label" x="444" y="84" text-anchor="middle">générer</text>
+
+      <line class="edge" x1="640" y1="93" x2="758" y2="93" marker-end="url(#arr)"/>
+      <text class="edge-label" x="699" y="84" text-anchor="middle">succès</text>
+
+      <path class="edge" d="M560,116 C545,160 520,195 502,228" marker-end="url(#arr)"/>
+      <text class="edge-label" x="548" y="176" text-anchor="start">échec</text>
+
+      <path class="edge" d="M612,116 C640,160 665,195 680,228" marker-end="url(#arr)"/>
+      <text class="edge-label" x="656" y="176" text-anchor="start">annuler</text>
+
+      <path class="edge" d="M458,228 C464,185 490,150 520,120" marker-end="url(#arr)"/>
+      <text class="edge-label" x="450" y="176" text-anchor="end">réessayer</text>
+
+      <path class="edge" d="M735,228 C760,190 745,150 705,118" marker-end="url(#arr)"/>
+      <text class="edge-label" x="762" y="196" text-anchor="start">générer à nouveau</text>
+
+      <path class="edge" d="M845,68 C810,8 625,8 572,66" marker-end="url(#arr)"/>
+      <text class="edge-label" x="710" y="26" text-anchor="middle">régénérer</text>
+
+      <path class="edge edge-dashed" d="M418,253 C220,253 90,200 90,120" marker-end="url(#arr)"/>
+      <text class="edge-label" x="200" y="290" text-anchor="middle">réinitialiser : vide les portions et le rapport</text>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip idle">WAITING</span></dt>
+      <dd>Piste au repos, rien d'enregistré.</dd>
+      <dt><span class="chip progress">IN_PROGRESS</span></dt>
+      <dd>Enregistrement en cours ou interrompu : le verrou de visibilité est posé.</dd>
+      <dt><span class="chip progress">GENERATING</span></dt>
+      <dd>En file FIFO puis transcription et rédaction, le verrou est libéré : l'acte est publié.</dd>
+      <dt><span class="chip ready">REPORT_READY</span></dt>
+      <dd>Rapport prêt, éditable et validable.</dd>
+      <dt><span class="chip error">ERROR</span></dt>
+      <dd>Génération en échec : portions non transcrites ou incident.</dd>
+      <dt><span class="chip idle">CANCELLED</span></dt>
+      <dd>Génération annulée : les portions restent.</dd>
+      <dt>enregistrer</dt>
+      <dd><code>PATCH /actes/{id}/start</code> (1<sup>re</sup> fois, live) ou <code>PATCH /actes/{id}/resume?reportType=live|dictated</code> : pose ou prolonge le verrou, refuse un autre médecin en <code>409</code>. Chaque portion montée (<code>POST /segments</code>) repousse le verrou de 30 min.</dd>
+      <dt>générer</dt>
+      <dd><code>POST /actes/{id}/reports/{type}</code> : refusé en <code>409</code> si la piste n'a aucune portion ou génère déjà. Vide le rapport ciblé, libère le verrou, met en file.</dd>
+      <dt>annuler</dt>
+      <dd><code>DELETE /actes/{id}/processing</code> : uniquement pendant la génération.</dd>
+      <dt>réinitialiser</dt>
+      <dd><code>DELETE /actes/{id}/reports/{type}</code> : « Recommencer de zéro » : vide les portions et le rapport de la seule piste ciblée.</dd>
+    </dl>
+  </figure>
+
+  <h2>Cycle du verrou de visibilité</h2>
+  <p class="note">
+    Un seul verrou par acte, posé par l'enregistrement de l'une ou l'autre piste :
+    <code>recordingOwnerId</code> + <code>lockExpiresAt</code>.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 250" role="img" aria-label="Cycle du verrou : libre, posé 30 minutes, libéré par la génération ou l'expiration">
+      <defs>
+        <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="60" y="90" width="230" height="70" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="175" y="120" text-anchor="middle" fill="var(--ok)">LIBRE</text>
+      <text class="edge-label" x="175" y="140" text-anchor="middle">acte visible de toute l'équipe</text>
+
+      <rect class="node" x="620" y="90" width="260" height="70" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="750" y="120" text-anchor="middle" fill="var(--dictated)">POSÉ · 30 min</text>
+      <text class="edge-label" x="750" y="140" text-anchor="middle">acte visible du seul détenteur</text>
+
+      <path class="edge" d="M290,105 C400,70 500,70 618,105" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="454" y="68" text-anchor="middle">enregistrer : live ou dictée</text>
+
+      <path class="edge" d="M618,145 C500,180 400,180 292,145" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="454" y="196" text-anchor="middle">générer (publication) · expiration puis balayage</text>
+
+      <path class="edge" d="M800,90 C780,40 720,40 700,88" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="750" y="34" text-anchor="middle">portion montée · +30 min</text>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip ready">LIBRE</span></dt>
+      <dd>Personne n'enregistre : l'acte figure dans le rail et la recherche de tous.</dd>
+      <dt><span class="chip lock">POSÉ</span></dt>
+      <dd>Pour les autres médecins, l'acte est absent des listes (filtre silencieux) et toute reprise ou dictée répond <code>409</code>.</dd>
+      <dt>enregistrer</dt>
+      <dd>Démarrage live (<code>start</code>), reprise ou dictée (<code>resume?reportType=…</code>) : acquiert le verrou s'il est libre, le prolonge pour son détenteur.</dd>
+      <dt>+30 min</dt>
+      <dd>Chaque portion montée repousse l'échéance : un enregistrement actif n'expire jamais.</dd>
+      <dt>libération</dt>
+      <dd>Le lancement de la génération publie l'acte ; un enregistrement abandonné est libéré par le balayage, une minute après l'échéance des 30 min.</dd>
+    </dl>
+  </figure>
+</main>
+</body>
+</html>
