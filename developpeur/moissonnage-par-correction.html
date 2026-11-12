@@ -1,0 +1,570 @@
+<!doctype html>
+<!--
+  Moissonnage par correction, référence vivante de l'apprentissage du glossaire.
+
+  Ce fichier est la source, et la seule. On l'ouvre directement dans un navigateur,
+  on l'édite ici, et il suit le code dans git : toute évolution de l'algorithme
+  (gardes de cible, ancrage dans le transcript, seuil d'injection, fichiers de
+  l'overlay) se répercute dans ce document au même commit que le code qui la porte.
+
+  Page autonome : aucune dépendance d'hébergement, seules les polices sont distantes
+  et une pile de repli est déclarée.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moissonnage par correction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #F4F6F8;
+    --surface: #FFFFFF;
+    --surface-sunk: #EDF0F4;
+    --ink: #141A20;
+    --ink-muted: #57646F;
+    --ink-faint: #7C8894;
+    --rule: #D9E0E7;
+    --rule-strong: #BDC7D1;
+    --live: #2F6F8F;
+    --live-wash: #E6EFF4;
+    --dictated: #8C6224;
+    --dictated-wash: #F5EEE2;
+    --block: #A8474F;
+    --block-wash: #F8EBEC;
+    --ok: #2F6B4F;
+    --ok-wash: #E7F0EB;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10151A;
+      --surface: #171E25;
+      --surface-sunk: #1D252D;
+      --ink: #E3E9EF;
+      --ink-muted: #9AA7B4;
+      --ink-faint: #77838F;
+      --rule: #27313A;
+      --rule-strong: #3A4650;
+      --live: #6FB2D0;
+      --live-wash: #16262E;
+      --dictated: #D2A662;
+      --dictated-wash: #2A2318;
+      --block: #E0959B;
+      --block-wash: #2E1B1D;
+      --ok: #7FC3A0;
+      --ok-wash: #16261F;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #10151A;
+    --surface: #171E25;
+    --surface-sunk: #1D252D;
+    --ink: #E3E9EF;
+    --ink-muted: #9AA7B4;
+    --ink-faint: #77838F;
+    --rule: #27313A;
+    --rule-strong: #3A4650;
+    --live: #6FB2D0;
+    --live-wash: #16262E;
+    --dictated: #D2A662;
+    --dictated-wash: #2A2318;
+    --block: #E0959B;
+    --block-wash: #2E1B1D;
+    --ok: #7FC3A0;
+    --ok-wash: #16261F;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 66rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+  }
+  header p.kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.4rem;
+  }
+  h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 2rem;
+  }
+  h2 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 3rem 0 0.35rem;
+  }
+  p.note {
+    color: var(--ink-muted);
+    margin: 0 0 1.2rem;
+    max-width: 60ch;
+  }
+  p.note code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    background: var(--surface-sunk);
+    border-radius: 0.25rem;
+    padding: 0.05rem 0.3rem;
+  }
+  figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  figure + figure { margin-top: 1rem; }
+  figure svg { display: block; min-width: 46rem; width: 100%; height: auto; }
+  svg text {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    fill: var(--ink);
+  }
+  svg .state-name { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 500; }
+  svg .edge-label { font-size: 11.5px; fill: var(--ink-muted); }
+  svg .edge { stroke: var(--rule-strong); stroke-width: 1.5; fill: none; }
+  svg .edge-dashed { stroke-dasharray: 5 4; }
+  svg .node { stroke: var(--rule-strong); }
+
+  figure pre.sample {
+    margin: 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--surface-sunk);
+    border-radius: 0.5rem;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+  }
+
+  dl.legend {
+    margin: 1rem 0 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1rem;
+    row-gap: 0.35rem;
+  }
+  dl.legend dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    align-self: start;
+    white-space: nowrap;
+  }
+  dl.legend dd { margin: 0; color: var(--ink-muted); }
+  dl.legend code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    background: var(--surface-sunk);
+    border-radius: 0.25rem;
+    padding: 0.05rem 0.3rem;
+  }
+  .chip {
+    display: inline-block;
+    border-radius: 0.3rem;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid var(--rule-strong);
+  }
+  .chip.progress { background: var(--live-wash); color: var(--live); }
+  .chip.ready { background: var(--ok-wash); color: var(--ok); }
+  .chip.error { background: var(--block-wash); color: var(--block); }
+  .chip.idle { background: var(--surface-sunk); color: var(--ink-muted); }
+  .chip.lock { background: var(--dictated-wash); color: var(--dictated); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Cause, dictée médicale</p>
+    <h1>Moissonnage par correction</h1>
+  </header>
+
+  <h2>D'un rapport validé à une variante apprise</h2>
+  <p class="note">
+    Quand le médecin corrige un rapport généré puis le valide, chaque terme qu'il a tapé
+    est confronté au transcript brut de la piste. S'il y trouve une forme entendue proche,
+    le couple « entendu, corrigé » entre dans le registre, puis dans le dictionnaire,
+    sans validation humaine : les gardes tiennent lieu de filet.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 365" role="img" aria-label="Chaîne du moissonnage : rapport validé, diff, termes corrigés, ancrage, paire retenue, registre, injection, overlay appris, archive">
+      <defs>
+        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="30" width="200" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="120" y="55" text-anchor="middle" fill="var(--ok)">Rapport validé</text>
+      <text class="edge-label" x="120" y="75" text-anchor="middle">pistes LIVE et DICTATED</text>
+
+      <rect class="node" x="370" y="30" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="470" y="55" text-anchor="middle" fill="var(--live)">Diff</text>
+      <text class="edge-label" x="470" y="75" text-anchor="middle">généré contre édité</text>
+
+      <rect class="node" x="720" y="30" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="820" y="55" text-anchor="middle" fill="var(--live)">Termes corrigés</text>
+      <text class="edge-label" x="820" y="75" text-anchor="middle">4 gardes de cible</text>
+
+      <rect class="node" x="720" y="150" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="820" y="175" text-anchor="middle" fill="var(--live)">Ancrage</text>
+      <text class="edge-label" x="820" y="195" text-anchor="middle">3 gardes sur la forme entendue</text>
+
+      <rect class="node" x="370" y="150" width="200" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="470" y="175" text-anchor="middle" fill="var(--ok)">Paire retenue</text>
+      <text class="edge-label" x="470" y="195" text-anchor="middle">heard, corrected</text>
+
+      <rect class="node" x="20" y="150" width="200" height="62" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="120" y="175" text-anchor="middle">Registre</text>
+      <text class="edge-label" x="120" y="195" text-anchor="middle">asr-harvest.json</text>
+
+      <rect class="node" x="20" y="270" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="120" y="295" text-anchor="middle" fill="var(--live)">Injection</text>
+      <text class="edge-label" x="120" y="315" text-anchor="middle">seuil de consultations</text>
+
+      <rect class="node" x="370" y="270" width="200" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="470" y="295" text-anchor="middle" fill="var(--ok)">Overlay appris</text>
+      <text class="edge-label" x="470" y="315" text-anchor="middle">asr-variants-learned.json</text>
+
+      <rect class="node" x="720" y="270" width="200" height="62" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="820" y="295" text-anchor="middle" fill="var(--dictated)">Archive</text>
+      <text class="edge-label" x="820" y="315" text-anchor="middle">dictionary-versions/</text>
+
+      <line class="edge" x1="220" y1="61" x2="368" y2="61" marker-end="url(#arr)"/>
+      <text class="edge-label" x="294" y="52" text-anchor="middle">validatedAt posé</text>
+
+      <line class="edge" x1="570" y1="61" x2="718" y2="61" marker-end="url(#arr)"/>
+      <text class="edge-label" x="644" y="52" text-anchor="middle">compte édité &gt; généré</text>
+
+      <line class="edge" x1="820" y1="92" x2="820" y2="148" marker-end="url(#arr)"/>
+      <text class="edge-label" x="810" y="124" text-anchor="end">transcript brut</text>
+
+      <line class="edge" x1="720" y1="181" x2="572" y2="181" marker-end="url(#arr)"/>
+      <text class="edge-label" x="646" y="172" text-anchor="middle">fenêtres 1 à 3 mots</text>
+
+      <line class="edge" x1="370" y1="181" x2="222" y2="181" marker-end="url(#arr)"/>
+      <text class="edge-label" x="296" y="172" text-anchor="middle">record()</text>
+
+      <line class="edge" x1="120" y1="212" x2="120" y2="268" marker-end="url(#arr)"/>
+      <text class="edge-label" x="130" y="244" text-anchor="start">cron horaire</text>
+
+      <line class="edge" x1="220" y1="301" x2="368" y2="301" marker-end="url(#arr)"/>
+      <text class="edge-label" x="294" y="292" text-anchor="middle">learnVariant()</text>
+
+      <line class="edge" x1="570" y1="301" x2="718" y2="301" marker-end="url(#arr)"/>
+      <text class="edge-label" x="644" y="292" text-anchor="middle">snapshot()</text>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip ready">Rapport validé</span></dt>
+      <dd><code>AsrHarvestService.harvest()</code> parcourt toutes les consultations et, pour chaque piste (<code>consultationReport</code> en LIVE, <code>doctorReport</code> en DICTATED), ne lit que les rapports dont <code>validatedAt</code> est posé : un brouillon auto-sauvegardé n'est jamais moissonné. Un rapport dont <code>generatedObservation</code> et <code>observation</code> sont identiques est sauté.</dd>
+      <dt>transcript brut</dt>
+      <dd>Concaténation, par saut de ligne, des <code>rawTranscription</code> des segments de la piste (<code>segmentsFor(reportType)</code>) : la sortie Whisper avant tout glossaire, seul témoin de ce qui a été entendu.</dd>
+      <dt><span class="chip progress">Diff</span></dt>
+      <dd><code>CorrectionHarvester.extract()</code> normalise les trois textes (accents retirés, minuscules, ponctuation et apostrophes remplacées par des espaces) et compte les mots. Un terme est candidat quand son compte dans le rapport édité dépasse son compte dans le rapport généré.</dd>
+      <dt><span class="chip progress">Termes corrigés</span></dt>
+      <dd>Quatre gardes de cible : <code>MIN_TERM_LENGTH = 5</code>, <code>STOPWORDS</code> (64 mots vides), aucun nombre (<code>\d+</code>), et le compte ci-dessus. Le terme retenu garde la graphie tapée par le médecin (accents, majuscule).</dd>
+      <dt><span class="chip progress">Ancrage</span></dt>
+      <dd><code>anchor()</code> glisse une fenêtre de 1 à 3 mots (<code>MAX_WINDOW = 3</code>) sur le transcript, concatène ses mots et retient la première fenêtre proche de la cible. Si une fenêtre est égale à la cible, le terme a été bien entendu quelque part : rien n'est appris, quoi que contiennent les autres fenêtres (règle du 28/10, <code>heardVerbatim()</code>). Anti-flexion <code>INFLECTION_STEM_RATIO = 0.7</code>, proximité orthographique à 25 % ou phonétique à 40 % de la longueur, première lettre égale dans les deux cas.</dd>
+      <dt><span class="chip ready">Paire retenue</span></dt>
+      <dd><code>HarvestedPair(heard, corrected)</code> : la fenêtre entendue, mots séparés par des espaces, et le terme corrigé. Dédupliquée par couple au sein d'un même rapport.</dd>
+      <dt><span class="chip idle">Registre</span></dt>
+      <dd><code>AsrHarvestStore.record()</code> cumule dans <code>~/.cause/asr-harvest.json</code> (<code>ASR_HARVEST_STORE_PATH</code>), groupé par terme corrigé normalisé ; l'identifiant de consultation rend l'opération idempotente, la sauvegarde n'a lieu que s'il y a du nouveau.</dd>
+      <dt>cron horaire</dt>
+      <dd><code>AsrHarvestScheduler</code>, <code>0 0 * * * *</code> par défaut (<code>ASR_HARVEST_CRON</code>), actif quand <code>ASR_HARVEST_ENABLED</code> vaut <code>true</code> : moisson puis injection, à chaque heure pleine.</dd>
+      <dt><span class="chip progress">Injection</span></dt>
+      <dd><code>AsrVariantInjectionService.inject()</code> : une cible dont le nombre de consultations distinctes (union de toutes ses formes entendues) atteint <code>ASR_HARVEST_THRESHOLD</code>, 1 par défaut depuis le 27/10/2026 (3 auparavant), voit toutes ses variantes non encore injectées passer au dictionnaire, puis marquées <code>injected</code>.</dd>
+      <dt><span class="chip ready">Overlay appris</span></dt>
+      <dd><code>ConceptDictionaryService.learnVariant()</code> ajoute la forme entendue aux <code>variantesAsr</code> du concept dont le terme canonique correspond (créé s'il n'existe pas), réindexe à chaud, puis ajoute le couple à <code>~/.cause/asr-variants-learned.json</code> (<code>ASR_HARVEST_LEARNED_PATH</code>). Cet overlay est relu au démarrage, après le dictionnaire de base du classpath.</dd>
+      <dt><span class="chip lock">Archive</span></dt>
+      <dd><code>DictionaryVersionArchiver.snapshot()</code> : copie horodatée de l'overlay, <code>dictionary-yyyyMMdd-HHmmss-SSS.json</code> dans <code>~/.cause/dictionary-versions/</code>, écrite seulement quand une injection a changé quelque chose (<code>ASR_HARVEST_VERSIONS_ENABLED</code>, <code>ASR_HARVEST_VERSIONS_DIR</code>).</dd>
+    </dl>
+  </figure>
+
+  <h2>Les gardes</h2>
+  <p class="note">
+    Précision d'abord : il vaut mieux rater une vraie déformation ASR qu'apprendre une
+    correction qui vient du modèle de langue. Les gardes se lisent dans l'ordre, celles de
+    la cible d'abord, puis celles de la forme entendue dans le transcript.
+  </p>
+  <figure>
+    <svg viewBox="0 0 960 350" role="img" aria-label="Les gardes : quatre sur le terme corrigé, puis fenêtre, anti-flexion, proximité orthographique ou phonétique sur la forme entendue">
+      <defs>
+        <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <text class="state-name" x="230" y="24" text-anchor="middle" fill="var(--ink-muted)">1 · la cible, le terme corrigé</text>
+      <text class="state-name" x="700" y="24" text-anchor="middle" fill="var(--ink-muted)">2 · la forme entendue, l'ancrage</text>
+
+      <rect class="node" x="20" y="40" width="420" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="36" y="60" fill="var(--live)">compte édité &gt; compte généré</text>
+      <text class="edge-label" x="36" y="78">le médecin a ajouté ce mot, ou l'a rendu plus fréquent</text>
+
+      <rect class="node" x="20" y="102" width="420" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="36" y="122" fill="var(--live)">MIN_TERM_LENGTH = 5</text>
+      <text class="edge-label" x="36" y="140">moins de 5 lettres après normalisation : « foie » est ignoré</text>
+
+      <rect class="node" x="20" y="164" width="420" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="36" y="184" fill="var(--live)">STOPWORDS, 64 mots vides</text>
+      <text class="edge-label" x="36" y="202">« pendant », « toujours », « plusieurs » : jamais une cible</text>
+
+      <rect class="node" x="20" y="226" width="420" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="36" y="246" fill="var(--live)">pas un nombre</text>
+      <text class="edge-label" x="36" y="264">\d+ : une posologie n'est jamais moissonnée</text>
+
+      <line class="edge" x1="230" y1="88" x2="230" y2="100" marker-end="url(#arr2)"/>
+      <line class="edge" x1="230" y1="150" x2="230" y2="162" marker-end="url(#arr2)"/>
+      <line class="edge" x1="230" y1="212" x2="230" y2="224" marker-end="url(#arr2)"/>
+
+      <path class="edge" d="M440,250 C476,250 466,64 498,64" marker-end="url(#arr2)"/>
+
+      <rect class="node" x="500" y="40" width="400" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="516" y="60" fill="var(--live)">fenêtre de 1 à 3 mots</text>
+      <text class="edge-label" x="516" y="78">MAX_WINDOW = 3, mots concaténés, égale à la cible : sautée</text>
+
+      <rect class="node" x="500" y="102" width="400" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="516" y="122" fill="var(--live)">anti-flexion</text>
+      <text class="edge-label" x="516" y="140">préfixe commun ≥ 70 % de la longueur mini : refusée</text>
+
+      <rect class="node" x="500" y="164" width="400" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="516" y="184" fill="var(--live)">proximité orthographique</text>
+      <text class="edge-label" x="516" y="202">même initiale, Levenshtein ≤ 25 % de la longueur maxi</text>
+
+      <rect class="node" x="500" y="226" width="400" height="48" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="516" y="246" fill="var(--live)">proximité phonétique</text>
+      <text class="edge-label" x="516" y="264">même initiale, code Metaphone commun, Levenshtein ≤ 40 %</text>
+
+      <rect class="node" x="500" y="288" width="400" height="48" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="516" y="308" fill="var(--ok)">HarvestedPair(heard, corrected)</text>
+      <text class="edge-label" x="516" y="326">la première fenêtre proche, 1 mot d'abord, puis 2, puis 3</text>
+
+      <line class="edge" x1="700" y1="88" x2="700" y2="100" marker-end="url(#arr2)"/>
+      <line class="edge" x1="700" y1="150" x2="700" y2="162" marker-end="url(#arr2)"/>
+      <line class="edge" x1="700" y1="212" x2="700" y2="224" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="708" y="221" text-anchor="start">sinon</text>
+      <line class="edge" x1="700" y1="274" x2="700" y2="286" marker-end="url(#arr2)"/>
+
+      <path class="edge" d="M900,188 C940,210 940,290 902,312" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="938" y="254" text-anchor="middle">ou</text>
+    </svg>
+    <dl class="legend">
+      <dt><code>compte</code></dt>
+      <dd>Refuse tout mot déjà présent autant de fois dans le généré : une correction qui déplace un mot sans l'ajouter ne produit rien.</dd>
+      <dt><code>MIN_TERM_LENGTH</code></dt>
+      <dd>Refuse les mots de moins de 5 lettres : « foi » corrigé en « foie » est trop court pour qu'une ressemblance signifie quelque chose.</dd>
+      <dt><code>STOPWORDS</code></dt>
+      <dd>Refuse les 64 mots-outils du français listés dans <code>CorrectionHarvester</code> : « pendent » corrigé en « pendant » est une faute de frappe du modèle, pas une déformation de l'oreille.</dd>
+      <dt><code>\d+</code></dt>
+      <dd>Refuse les nombres : « 50 » corrigé en « 500 » est une posologie, et un dictionnaire n'a pas à réécrire des doses.</dd>
+      <dt><code>fenêtre</code></dt>
+      <dd>Les mots du transcript sont concaténés par 1, 2 puis 3 (« vol », « vol d », « vol d arene »), pour rattraper un terme que Whisper a découpé. Une fenêtre égale à la cible arrête tout : si le terme a été bien entendu, la correction ne vient pas de l'ASR, et aucune autre fenêtre n'est ancrée. Sans cette règle, « un matin, un soir » ajouté par le médecin s'ancrait sur « main » entendu ailleurs (banc du 28/10).</dd>
+      <dt><code>anti-flexion</code></dt>
+      <dd><code>inflectionOfSameStem()</code> : si le préfixe commun couvre au moins 70 % du plus court des deux mots, c'est un pluriel ou une conjugaison, pas une déformation ; une vraie erreur d'oreille diverge tôt dans le mot.</dd>
+      <dt><code>orthographique</code></dt>
+      <dd><code>orthographicallyClose()</code> : première lettre égale et <code>EditDistance.levenshtein()</code> au plus 25 % de la longueur du plus long, plancher 1.</dd>
+      <dt><code>phonétique</code></dt>
+      <dd><code>phoneticallyClose()</code> : première lettre égale, au moins un code <code>PhoneticEncoder.codes()</code> (Double Metaphone, primaire ou alternatif, 6 caractères maxi) en commun, et Levenshtein au plus 40 % de la longueur du plus long, plancher 1.</dd>
+    </dl>
+  </figure>
+  <figure>
+    <svg viewBox="0 0 940 240" role="img" aria-label="Trois canaris refusés : hallucination du LLM, correction de latéralité, reformulation stylistique">
+      <defs>
+        <marker id="arr3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="16" width="340" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="36" y="40">Hallucination du LLM</text>
+      <text class="edge-label" x="36" y="60">généré azithromycine, tapé et entendu amoxicilline</text>
+      <rect class="node" x="410" y="16" width="330" height="58" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="426" y="40" fill="var(--block)">ancrage</text>
+      <text class="edge-label" x="426" y="60">cible entendue à l'identique, ancrage arrêté</text>
+      <rect class="node" x="790" y="16" width="130" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="855" y="40" text-anchor="middle" fill="var(--ink-muted)">0 paire</text>
+      <text class="edge-label" x="855" y="60" text-anchor="middle">registre vide</text>
+      <line class="edge" x1="360" y1="45" x2="408" y2="45" marker-end="url(#arr3)"/>
+      <line class="edge" x1="740" y1="45" x2="788" y2="45" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="20" y="90" width="340" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="36" y="114">Latéralité</text>
+      <text class="edge-label" x="36" y="134">généré gauche, tapé droit, entendu « genou gauche »</text>
+      <rect class="node" x="410" y="90" width="330" height="58" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="426" y="114" fill="var(--block)">ancrage</text>
+      <text class="edge-label" x="426" y="134">aucune fenêtre proche de « droit » dans le transcript</text>
+      <rect class="node" x="790" y="90" width="130" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="855" y="114" text-anchor="middle" fill="var(--ink-muted)">0 paire</text>
+      <text class="edge-label" x="855" y="134" text-anchor="middle">registre vide</text>
+      <line class="edge" x1="360" y1="119" x2="408" y2="119" marker-end="url(#arr3)"/>
+      <line class="edge" x1="740" y1="119" x2="788" y2="119" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="20" y="164" width="340" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="36" y="188">Reformulation et flexions</text>
+      <text class="edge-label" x="36" y="208">« douleur persistante » tapé « douleurs qui persistent »</text>
+      <rect class="node" x="410" y="164" width="330" height="58" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="426" y="188" fill="var(--block)">anti-flexion</text>
+      <text class="edge-label" x="426" y="208">préfixe 7 sur 7 et 7 sur 10 ; « qui » trop court</text>
+      <rect class="node" x="790" y="164" width="130" height="58" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="855" y="188" text-anchor="middle" fill="var(--ink-muted)">0 paire</text>
+      <text class="edge-label" x="855" y="208" text-anchor="middle">registre vide</text>
+      <line class="edge" x1="360" y1="193" x2="408" y2="193" marker-end="url(#arr3)"/>
+      <line class="edge" x1="740" y1="193" x2="788" y2="193" marker-end="url(#arr3)"/>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip error">Hallucination</span></dt>
+      <dd>Le modèle a écrit « azithromycine » alors que Whisper avait bien entendu « amoxicilline ». La cible « amoxicilline » est dans le transcript à l'identique : l'ancrage s'arrête là, même si une autre fenêtre lui ressemblait. Rien n'est appris, trois consultations durant (<code>canari_hallucinationLlm_termeBienEntenduParLAsr_rienNestMoissonne</code>).</dd>
+      <dt><span class="chip error">Latéralité</span></dt>
+      <dd>« gauche » corrigé en « droit » : « droit » passe les gardes de cible (5 lettres, pas un mot vide) mais n'a aucun antécédent proche dans « douleur du genou gauche à la palpation ». La correction est médicale, pas acoustique (<code>canari_correctionDeLateralite_sansAntecedentDansLeTranscript_rienNestMoissonne</code>).</dd>
+      <dt><span class="chip error">Reformulation</span></dt>
+      <dd>« douleurs » contre « douleur » partage 7 lettres sur 7, « persistent » contre « persistante » 7 sur 10 : l'anti-flexion refuse les deux. « qui » tombe sur la longueur et sur la liste des mots vides (<code>canari_reformulationStylistique_flexionsDeMotsCourants_rienNestMoissonne</code>).</dd>
+    </dl>
+  </figure>
+
+  <h2>Un exemple de bout en bout</h2>
+  <p class="note">
+    Whisper entend « vol d'arène », le modèle écrit « Voldarène », le médecin tape
+    « Voltarène » et valide. Une heure plus tard au plus, le dictionnaire connaît la variante.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 380" role="img" aria-label="Exemple : du transcript vol d arene au rapport corrigé Voltarène, ancrage par fenêtre de trois mots, registre, injection, overlay et archive">
+      <defs>
+        <marker id="arr4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="20" width="200" height="62" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="120" y="45" text-anchor="middle">Transcript brut</text>
+      <text class="edge-label" x="120" y="65" text-anchor="middle">« il prend du vol d arene »</text>
+
+      <rect class="node" x="250" y="20" width="200" height="62" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="350" y="45" text-anchor="middle">Rapport généré</text>
+      <text class="edge-label" x="350" y="65" text-anchor="middle">« prend du Voldarène »</text>
+
+      <rect class="node" x="480" y="20" width="200" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="580" y="45" text-anchor="middle" fill="var(--ok)">Rapport validé</text>
+      <text class="edge-label" x="580" y="65" text-anchor="middle">« prend du Voltarène »</text>
+
+      <rect class="node" x="710" y="20" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="810" y="45" text-anchor="middle" fill="var(--live)">Diff</text>
+      <text class="edge-label" x="810" y="65" text-anchor="middle">voltarene : 1 édité, 0 généré</text>
+
+      <line class="edge" x1="220" y1="51" x2="248" y2="51" marker-end="url(#arr4)"/>
+      <line class="edge" x1="450" y1="51" x2="478" y2="51" marker-end="url(#arr4)"/>
+      <line class="edge" x1="680" y1="51" x2="708" y2="51" marker-end="url(#arr4)"/>
+
+      <path class="edge" d="M810,82 C810,120 780,120 780,158" marker-end="url(#arr4)"/>
+      <text class="edge-label" x="822" y="124" text-anchor="start">anchor()</text>
+
+      <rect class="node" x="640" y="160" width="280" height="62" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="780" y="185" text-anchor="middle" fill="var(--block)">w = 1 : « vol »</text>
+      <text class="edge-label" x="780" y="205" text-anchor="middle">préfixe 3 sur 3 : flexion, refusée</text>
+
+      <rect class="node" x="330" y="160" width="280" height="62" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="470" y="185" text-anchor="middle" fill="var(--block)">w = 2 : « vol d »</text>
+      <text class="edge-label" x="470" y="205" text-anchor="middle">« vold » : préfixe 3 sur 4, refusée</text>
+
+      <rect class="node" x="20" y="160" width="280" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="160" y="185" text-anchor="middle" fill="var(--ok)">w = 3 : « vol d arene »</text>
+      <text class="edge-label" x="160" y="205" text-anchor="middle">« voldarene » : Levenshtein 1 ≤ 2, retenue</text>
+
+      <line class="edge" x1="640" y1="191" x2="612" y2="191" marker-end="url(#arr4)"/>
+      <line class="edge" x1="330" y1="191" x2="302" y2="191" marker-end="url(#arr4)"/>
+
+      <path class="edge" d="M160,222 C160,260 120,260 120,298" marker-end="url(#arr4)"/>
+      <text class="edge-label" x="172" y="264" text-anchor="start">record()</text>
+
+      <rect class="node" x="20" y="300" width="200" height="62" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="120" y="325" text-anchor="middle">Registre</text>
+      <text class="edge-label" x="120" y="345" text-anchor="middle">« vol d arene », 1 consultation</text>
+
+      <rect class="node" x="250" y="300" width="200" height="62" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="350" y="325" text-anchor="middle" fill="var(--live)">Injection</text>
+      <text class="edge-label" x="350" y="345" text-anchor="middle">1 ≥ seuil 1 : learnVariant()</text>
+
+      <rect class="node" x="480" y="300" width="200" height="62" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="580" y="325" text-anchor="middle" fill="var(--ok)">Overlay appris</text>
+      <text class="edge-label" x="580" y="345" text-anchor="middle">variantesAsr += « vol d arene »</text>
+
+      <rect class="node" x="710" y="300" width="200" height="62" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="810" y="325" text-anchor="middle" fill="var(--dictated)">Archive</text>
+      <text class="edge-label" x="810" y="345" text-anchor="middle">dictionary-horodatage.json</text>
+
+      <line class="edge" x1="220" y1="331" x2="248" y2="331" marker-end="url(#arr4)"/>
+      <line class="edge" x1="450" y1="331" x2="478" y2="331" marker-end="url(#arr4)"/>
+      <line class="edge" x1="680" y1="331" x2="708" y2="331" marker-end="url(#arr4)"/>
+    </svg>
+    <dl class="legend">
+      <dt>normalisation</dt>
+      <dd>« vol d'arène » devient « vol d arene » : accents retirés, apostrophe remplacée par une espace. Le terme tapé « Voltarène » se compare sous la forme « voltarene », 9 lettres, absent du généré (où l'on trouve « voldarene »).</dd>
+      <dt>w = 1</dt>
+      <dd>« vol » contre « voltarene » : préfixe commun de 3 lettres sur un minimum de 3, soit 100 % ≥ 70 %. L'anti-flexion le prend pour un radical commun et refuse. « d » et « arene » n'ont pas la bonne initiale.</dd>
+      <dt>w = 2</dt>
+      <dd>« vol d » concaténé en « vold » : préfixe 3 sur 4, 75 % ≥ 70 %, refusé de même. « d arene » commence par un d.</dd>
+      <dt>w = 3</dt>
+      <dd>« vol d arene » concaténé en « voldarene » : préfixe 3 sur 9, 33 % &lt; 70 %, l'anti-flexion laisse passer. Même initiale v, Levenshtein 1 (d contre t) ≤ plancher de 25 % de 9, soit 2 : proche orthographiquement. La paire est <code>HarvestedPair("vol d arene", "Voltarène")</code>, mots séparés par des espaces.</dd>
+      <dt>registre</dt>
+      <dd>Entrée « Voltarène », variante « vol d arene » liée à l'identifiant de la consultation. Au passage suivant du job, le même rapport ne compte pas deux fois.</dd>
+      <dt>injection</dt>
+      <dd>Une consultation distincte atteint le seuil par défaut de 1 : <code>learnVariant("vol d arene", "Voltarène")</code> trouve le concept <code>Voltarène</code> (catégorie médicament) par son terme canonique et y ajoute la variante ; la variante est marquée <code>injected</code> dans le registre.</dd>
+      <dt>overlay et archive</dt>
+      <dd><code>asr-variants-learned.json</code> reçoit <code>{"heard": "vol d arene", "corrected": "Voltarène"}</code>, l'index est rechargé à chaud, puis <code>dictionary-versions/</code> reçoit une copie horodatée. La génération suivante qui entend « vol d'arène » écrit Voltarène. Le scénario <code>formesEntenduesDistinctesConvergentes_medecinsDifferents_injecteToutesLesVariantes</code> étend l'exemple à trois oreilles différentes : « vol d ariane », « vol d arene » et « voldarene » sont toutes injectées une fois la cible au seuil.</dd>
+    </dl>
+  </figure>
+
+  <h2>Ce que le registre retient</h2>
+  <p class="note">
+    <code>~/.cause/asr-harvest.json</code> est la provenance de chaque variante apprise : qui
+    l'a corrigée, dans quelles consultations, et si elle a déjà été injectée. C'est lui que
+    l'on relit avant un retour arrière.
+  </p>
+  <figure>
+<pre class="sample">[
+  {
+    "corrected": "Voltarène",
+    "variants": [
+      { "heard": "vol d arene",  "consultations": ["3f2c…"], "injected": true },
+      { "heard": "voldarene",    "consultations": ["9a41…"], "injected": true },
+      { "heard": "vol d ariane", "consultations": ["c07e…"], "injected": false }
+    ]
+  }
+]</pre>
+    <dl class="legend">
+      <dt><code>corrected</code></dt>
+      <dd>La cible, dans la graphie tapée par le médecin ; la clé du registre est sa forme normalisée (sans accent, en minuscules), donc « Voltarène » et « voltarene » tombent dans la même entrée (<code>HarvestEntry</code>).</dd>
+      <dt><code>variants</code></dt>
+      <dd>Les formes entendues pour cette cible, une par déformation de Whisper (<code>Variant</code>). Le seuil se compte sur l'union de leurs consultations, <code>distinctConsultationCount()</code>, pour ne pas fragmenter le décompte quand le même mot est entendu de trois façons.</dd>
+      <dt><code>heard</code></dt>
+      <dd>La fenêtre du transcript telle qu'elle a été retenue, mots séparés par des espaces ; c'est cette chaîne qui devient une <code>variantesAsr</code> du concept.</dd>
+      <dt><code>consultations</code></dt>
+      <dd>Identifiants des consultations où cette forme a été corrigée ; un identifiant déjà présent est ignoré par <code>record()</code>, ce qui rend la moisson rejouable à chaque heure.</dd>
+      <dt><code>injected</code></dt>
+      <dd>Posé par <code>markInjected()</code> une fois <code>learnVariant()</code> appelé. Un retour arrière consiste à retirer le couple de <code>asr-variants-learned.json</code> (ou à restaurer une copie de <code>dictionary-versions/</code>), puis à redémarrer : la variante fautive reste visible ici avec sa provenance, et son drapeau empêche sa réinjection tant qu'il n'est pas remis à <code>false</code>.</dd>
+    </dl>
+  </figure>
+</main>
+</body>
+</html>
