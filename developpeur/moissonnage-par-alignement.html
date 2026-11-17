@@ -1,0 +1,578 @@
+<!doctype html>
+<!--
+  Moissonnage par alignement, référence vivante du chantier 12 du glossaire.
+
+  Ce fichier est la source, et la seule. On l'ouvre directement dans un navigateur,
+  on l'édite ici, et il suit le code dans git : toute évolution de l'algorithme
+  (extracteur, barrières de sélection, plafond de ressemblance, registre de
+  provenance) se répercute dans ce document au même commit que le code qui la porte.
+  L'extracteur, la question au modèle, la sélection, la sonde, la clé de traitement et
+  l'origine dans le registre sont livrés le 28/10/2026. Les briques marquées
+  « à construire » sont le lot restant : la révocation à la revalidation, l'élagage,
+  la fenêtre de nuit ; elles perdent cette marque quand leur code arrive.
+
+  Page autonome : aucune dépendance d'hébergement, seules les polices sont distantes
+  et une pile de repli est déclarée.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moissonnage par alignement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:wght@500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #F4F6F8;
+    --surface: #FFFFFF;
+    --surface-sunk: #EDF0F4;
+    --ink: #141A20;
+    --ink-muted: #57646F;
+    --ink-faint: #7C8894;
+    --rule: #D9E0E7;
+    --rule-strong: #BDC7D1;
+    --live: #2F6F8F;
+    --live-wash: #E6EFF4;
+    --dictated: #8C6224;
+    --dictated-wash: #F5EEE2;
+    --block: #A8474F;
+    --block-wash: #F8EBEC;
+    --ok: #2F6B4F;
+    --ok-wash: #E7F0EB;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10151A;
+      --surface: #171E25;
+      --surface-sunk: #1D252D;
+      --ink: #E3E9EF;
+      --ink-muted: #9AA7B4;
+      --ink-faint: #77838F;
+      --rule: #27313A;
+      --rule-strong: #3A4650;
+      --live: #6FB2D0;
+      --live-wash: #16262E;
+      --dictated: #D2A662;
+      --dictated-wash: #2A2318;
+      --block: #E0959B;
+      --block-wash: #2E1B1D;
+      --ok: #7FC3A0;
+      --ok-wash: #16261F;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #10151A;
+    --surface: #171E25;
+    --surface-sunk: #1D252D;
+    --ink: #E3E9EF;
+    --ink-muted: #9AA7B4;
+    --ink-faint: #77838F;
+    --rule: #27313A;
+    --rule-strong: #3A4650;
+    --live: #6FB2D0;
+    --live-wash: #16262E;
+    --dictated: #D2A662;
+    --dictated-wash: #2A2318;
+    --block: #E0959B;
+    --block-wash: #2E1B1D;
+    --ok: #7FC3A0;
+    --ok-wash: #16261F;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 66rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+  }
+  header p.kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.4rem;
+  }
+  h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 2rem;
+  }
+  h2 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 3rem 0 0.35rem;
+  }
+  p.note {
+    color: var(--ink-muted);
+    margin: 0 0 1.2rem;
+    max-width: 60ch;
+  }
+  figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  figure svg { display: block; min-width: 46rem; width: 100%; height: auto; }
+  svg text {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    fill: var(--ink);
+  }
+  svg .state-name { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 500; }
+  svg .edge-label { font-size: 11.5px; fill: var(--ink-muted); }
+  svg .edge { stroke: var(--rule-strong); stroke-width: 1.5; fill: none; }
+  svg .edge-dashed { stroke-dasharray: 5 4; }
+  svg .node { stroke: var(--rule-strong); }
+
+  dl.legend {
+    margin: 1rem 0 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 1rem;
+    row-gap: 0.35rem;
+  }
+  dl.legend dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    align-self: start;
+    white-space: nowrap;
+  }
+  dl.legend dd { margin: 0; color: var(--ink-muted); }
+  dl.legend code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    background: var(--surface-sunk);
+    border-radius: 0.25rem;
+    padding: 0.05rem 0.3rem;
+  }
+  .chip {
+    display: inline-block;
+    border-radius: 0.3rem;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid var(--rule-strong);
+  }
+  .chip.progress { background: var(--live-wash); color: var(--live); }
+  .chip.ready { background: var(--ok-wash); color: var(--ok); }
+  .chip.error { background: var(--block-wash); color: var(--block); }
+  .chip.idle { background: var(--surface-sunk); color: var(--ink-muted); }
+  .chip.lock { background: var(--dictated-wash); color: var(--dictated); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Cause, dictée médicale</p>
+    <h1>Moissonnage par alignement</h1>
+  </header>
+
+  <h2>Pourquoi aligner et non inventer</h2>
+  <p class="note">
+    Mesuré le 25 octobre 2026 sur le <code>gemma4:26b</code> du CHU, avec 22 formes
+    mal entendues tirées de nos transcriptions. Le modèle local ne sait pas deviner un
+    terme, il sait le reconnaître dans une liste.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 250" role="img" aria-label="Question libre : 8 sur 22. Liste fermée des termes du rapport validé : 16 sur 22.">
+      <defs>
+        <marker id="arr0" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="30" y="90" width="200" height="70" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="130" y="120" text-anchor="middle">« ambrosia talgis »</text>
+      <text class="edge-label" x="130" y="140" text-anchor="middle">forme entendue, en contexte</text>
+
+      <rect class="node" x="380" y="30" width="230" height="70" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="495" y="60" text-anchor="middle" fill="var(--block)">QUESTION LIBRE</text>
+      <text class="edge-label" x="495" y="80" text-anchor="middle">« que peut être ce mot ? »</text>
+
+      <rect class="node" x="380" y="150" width="230" height="70" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="495" y="180" text-anchor="middle" fill="var(--ok)">LISTE FERMÉE</text>
+      <text class="edge-label" x="495" y="200" text-anchor="middle">« quel terme du rapport ? »</text>
+
+      <path class="edge" d="M230,115 C300,100 320,75 378,65" marker-end="url(#arr0)"/>
+      <path class="edge" d="M230,135 C300,150 320,175 378,185" marker-end="url(#arr0)"/>
+
+      <rect class="node" x="740" y="30" width="170" height="70" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="825" y="60" text-anchor="middle" fill="var(--block)">8 / 22</text>
+      <text class="edge-label" x="825" y="80" text-anchor="middle">jamais « je ne sais pas »</text>
+
+      <rect class="node" x="740" y="150" width="170" height="70" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="825" y="180" text-anchor="middle" fill="var(--ok)">16 / 22</text>
+      <text class="edge-label" x="825" y="200" text-anchor="middle">une abstention juste</text>
+
+      <line class="edge" x1="610" y1="65" x2="738" y2="65" marker-end="url(#arr0)"/>
+      <line class="edge" x1="610" y1="185" x2="738" y2="185" marker-end="url(#arr0)"/>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip error">question libre</span></dt>
+      <dd>Le modèle invente : 8 bonnes réponses sur 22, et aucune abstention. Il n'avoue jamais l'ignorance.</dd>
+      <dt><span class="chip ready">liste fermée</span></dt>
+      <dd>On lui donne les termes du rapport validé par le médecin : 16 bonnes réponses sur 22. Il n'a plus qu'à choisir le terme qui ressemble à ce qu'il a entendu : il aligne.</dd>
+      <dt>échecs restants</dt>
+      <dd>Des médicaments entendus comme des mots courants : « complément de soie » pour duloxétine, « allergine 75 » pour prégabaline. Le plafond de ressemblance les refuse plutôt que de les laisser passer.</dd>
+      <dt>règle</dt>
+      <dd>Aucun appel externe, jamais : le modèle est le <code>gemma4:26b</code> local, et il n'est sollicité qu'entre 0 h et 6 h pour ne pas gêner les consultations.</dd>
+    </dl>
+  </figure>
+
+  <h2>Une nuit de moissonnage</h2>
+  <p class="note">
+    La chaîne complète, de la sonde de santé à l'overlay appris, telle que
+    <code>AsrHarvestScheduler</code> la joue à chaque passage, après le moissonnage par
+    correction et avant l'injection commune aux deux.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 420" role="img" aria-label="Chaîne nocturne : sonde de santé, rapports validés non traités, extracteur, question, sélection, registre, injection, overlay et archive">
+      <defs>
+        <marker id="arr1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="40" width="170" height="56" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="105" y="64" text-anchor="middle" fill="var(--live)">SONDE</text>
+      <text class="edge-label" x="105" y="84" text-anchor="middle">réponse connue, sortie saine</text>
+
+      <rect class="node" x="250" y="40" width="200" height="56" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="350" y="64" text-anchor="middle" fill="var(--live)">RAPPORTS VALIDÉS</text>
+      <text class="edge-label" x="350" y="84" text-anchor="middle">clé non encore traitée</text>
+
+      <rect class="node" x="510" y="40" width="170" height="56" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="595" y="64" text-anchor="middle" fill="var(--live)">EXTRACTEUR</text>
+      <text class="edge-label" x="595" y="84" text-anchor="middle">AlignmentExtractor</text>
+
+      <rect class="node" x="740" y="40" width="180" height="56" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="830" y="64" text-anchor="middle" fill="var(--live)">QUESTION</text>
+      <text class="edge-label" x="830" y="84" text-anchor="middle">une par candidate, 30 jetons</text>
+
+      <line class="edge" x1="190" y1="68" x2="248" y2="68" marker-end="url(#arr1)"/>
+      <line class="edge" x1="450" y1="68" x2="508" y2="68" marker-end="url(#arr1)"/>
+      <line class="edge" x1="680" y1="68" x2="738" y2="68" marker-end="url(#arr1)"/>
+
+      <path class="edge" d="M830,96 C830,150 830,170 830,196" marker-end="url(#arr1)"/>
+
+      <rect class="node" x="740" y="200" width="180" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="830" y="224" text-anchor="middle" fill="var(--dictated)">SÉLECTION</text>
+      <text class="edge-label" x="830" y="244" text-anchor="middle">liste, différence, ressemblance</text>
+
+      <rect class="node" x="510" y="200" width="170" height="56" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="595" y="224" text-anchor="middle">REGISTRE</text>
+      <text class="edge-label" x="595" y="244" text-anchor="middle">asr-harvest.json</text>
+
+      <rect class="node" x="250" y="200" width="200" height="56" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="350" y="224" text-anchor="middle">INJECTION</text>
+      <text class="edge-label" x="350" y="244" text-anchor="middle">dès la première consultation</text>
+
+      <rect class="node" x="20" y="200" width="170" height="56" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="105" y="224" text-anchor="middle" fill="var(--ok)">OVERLAY</text>
+      <text class="edge-label" x="105" y="244" text-anchor="middle">rechargé à chaud</text>
+
+      <line class="edge" x1="738" y1="228" x2="682" y2="228" marker-end="url(#arr1)"/>
+      <line class="edge" x1="508" y1="228" x2="452" y2="228" marker-end="url(#arr1)"/>
+      <line class="edge" x1="248" y1="228" x2="192" y2="228" marker-end="url(#arr1)"/>
+
+      <rect class="node" x="20" y="340" width="170" height="56" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="105" y="364" text-anchor="middle" fill="var(--ink-muted)">ARCHIVE</text>
+      <text class="edge-label" x="105" y="384" text-anchor="middle">dictionary-versions/</text>
+      <path class="edge" d="M105,256 C105,290 105,310 105,338" marker-end="url(#arr1)"/>
+
+      <rect class="node" x="510" y="340" width="410" height="56" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="715" y="364" text-anchor="middle" fill="var(--ink-muted)">PROMPT DE GÉNÉRATION</text>
+      <text class="edge-label" x="715" y="384" text-anchor="middle">la variante sert à la prochaine dictée où elle réapparaît</text>
+      <path class="edge" d="M190,300 C300,300 380,368 508,368" marker-end="url(#arr1)"/>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip idle">à construire</span></dt>
+      <dd>La fenêtre de nuit : le passage suit le cron commun <code>ASR_HARVEST_CRON</code>, horaire par défaut, sans créneau propre. La révocation à la revalidation, voir la dernière section.</dd>
+      <dt>JOB</dt>
+      <dd><code>AsrHarvestScheduler.run()</code> enchaîne le moissonnage par correction, puis celui-ci si <code>ASR_HARVEST_ALIGNMENT_ENABLED</code> est vrai (défaut), puis l'injection ; <code>ASR_HARVEST_ENABLED</code> à faux arrête les trois.</dd>
+      <dt><span class="chip progress">SONDE</span></dt>
+      <dd><code>AlignmentQuestioner.probe()</code>, une fois par passage, avant la première question : « douliprane » dans « elle prend du douliprane un gramme le matin et le soir », liste Doliprane, Céphalée, Scanner ; la réponse doit être « Doliprane », accents et casse ignorés. Une réponse absente, fausse ou dégénérée, une suite de jetons <code>&lt;unused</code> comme on l'a vue sous pression de mémoire vidéo, annule le passage : rien n'est demandé, rien n'est marqué traité, le cron suivant réessaie.</dd>
+      <dt><span class="chip progress">RAPPORTS VALIDÉS</span></dt>
+      <dd>Les deux pistes de chaque consultation dont <code>validatedAt</code> est posé et dont la transcription brute n'est pas vide. Clé de traitement <code>AlignmentDoneStore</code> : identifiant de consultation, piste, SHA-256 du rapport validé, dans <code>~/.cause/asr-alignment-traites.json</code>. Une clé déjà vue n'est pas redemandée ; un rapport revalidé change d'empreinte, donc il est retraité.</dd>
+      <dt><span class="chip progress">EXTRACTEUR</span></dt>
+      <dd><code>AlignmentExtractor</code> : les fenêtres du transcript brut que le modèle devra expliquer, leur contexte et la liste fermée des termes du rapport, voir la section suivante. Sans candidate ou sans terme, le rapport est marqué traité sans question.</dd>
+      <dt><span class="chip progress">QUESTION</span></dt>
+      <dd><code>AlignmentQuestioner.ask()</code> : une question par candidate, l'extrait, la forme mal entendue, la liste à puces, la consigne de répondre par un terme recopié ou « aucun ». <code>OllamaHttpClient.chat</code> sur le modèle de génération (<code>ollama.model</code>), sans réflexion, température 0, <code>NUM_PREDICT = 30</code>. La réponse est réduite à sa première ligne, guillemets et point final ôtés ; un modèle muet rend null. Une sortie dégénérée en cours de passage (<code>AlignmentQuestioner.degenerate</code>, jetons <code>&lt;unused</code>) l'interrompt : <code>AlignmentHarvestService</code> enregistre ce qui a été retenu, ne marque pas le rapport en cours traité, et le cron suivant le reprend.</dd>
+      <dt><span class="chip lock">SÉLECTION</span></dt>
+      <dd><code>AlignmentSelector</code> : cinq barrières, dont le plafond de ressemblance <code>AsrResemblanceGuard</code>, voir la section « La sélection ». Ce qui passe entre au registre sous l'origine « alignement », pour la consultation qui l'a produit.</dd>
+      <dt>REGISTRE</dt>
+      <dd><code>AsrHarvestStore.record(heard, corrected, consultation, origine)</code>, le même fichier <code>~/.cause/asr-harvest.json</code> que le moissonnage par correction : terme cible, formes entendues, consultations d'origine, et l'origine de chaque forme.</dd>
+      <dt>INJECTION</dt>
+      <dd><code>AsrVariantInjectionService</code>, seuil <code>ASR_HARVEST_THRESHOLD</code> à 1 par défaut depuis le 27 octobre 2026 : la variante entre dès sa première consultation.</dd>
+      <dt><span class="chip ready">OVERLAY</span></dt>
+      <dd><code>ConceptDictionaryService.learnVariant</code> écrit <code>~/.cause/asr-variants-learned.json</code>, relu à chaud ; le dictionnaire de base n'est jamais modifié.</dd>
+      <dt>ARCHIVE</dt>
+      <dd><code>DictionaryVersionArchiver</code> copie l'overlay horodaté dans <code>dictionary-versions/</code> à chaque injection qui change quelque chose.</dd>
+    </dl>
+  </figure>
+
+  <h2>L'extracteur</h2>
+  <p class="note">
+    Quelles fenêtres du transcript brut méritent une question. <code>AlignmentExtractor</code>
+    part du transcript, pas du rapport : l'inverse du moissonnage par correction. Une seule
+    voie : un mot que ni le rapport, ni le dictionnaire, ni le français courant ne connaissent.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 300" role="img" aria-label="Décision pour un mot : connu, jamais ; hors lexique, candidat ; sinon jamais">
+      <defs>
+        <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="30" width="190" height="60" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="115" y="55" text-anchor="middle">MOT</text>
+      <text class="edge-label" x="115" y="75" text-anchor="middle">du transcript brut, à son tour</text>
+
+      <rect class="node" x="290" y="30" width="200" height="60" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="390" y="55" text-anchor="middle" fill="var(--live)">CONNUE ?</text>
+      <text class="edge-label" x="390" y="75" text-anchor="middle">rapport, dictionnaire, nombre</text>
+
+      <line class="edge" x1="210" y1="60" x2="288" y2="60" marker-end="url(#arr2)"/>
+
+      <rect class="node" x="720" y="30" width="200" height="60" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="820" y="55" text-anchor="middle" fill="var(--ink-muted)">JAMAIS</text>
+      <text class="edge-label" x="820" y="75" text-anchor="middle">« glasgow », « 15 », « gauche »</text>
+
+      <line class="edge" x1="490" y1="60" x2="718" y2="60" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="604" y="52" text-anchor="middle">oui</text>
+
+      <rect class="node" x="290" y="140" width="200" height="60" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="390" y="165" text-anchor="middle" fill="var(--live)">HORS LEXIQUE ?</text>
+      <text class="edge-label" x="390" y="185" text-anchor="middle">150 000 formes du français</text>
+
+      <path class="edge" d="M390,90 C390,110 390,120 390,138" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="402" y="118" text-anchor="start">non</text>
+
+      <rect class="node" x="720" y="140" width="200" height="60" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="820" y="165" text-anchor="middle" fill="var(--ok)">CANDIDATE</text>
+      <text class="edge-label" x="820" y="185" text-anchor="middle">« lombargie », « ambrosia talgis »</text>
+
+      <line class="edge" x1="490" y1="170" x2="718" y2="170" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="604" y="162" text-anchor="middle">oui, inconnu</text>
+      <text class="edge-label" x="820" y="205" text-anchor="middle">mots inconnus consécutifs : une seule fenêtre, 3 mots au plus</text>
+
+      <rect class="node" x="290" y="240" width="200" height="46" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="390" y="268" text-anchor="middle" fill="var(--ink-muted)">JAMAIS</text>
+      <text class="edge-label" x="604" y="268" text-anchor="start">« vol d'arène », « parce », « est-ce »</text>
+
+      <path class="edge" d="M390,200 C390,215 390,225 390,238" marker-end="url(#arr2)"/>
+      <text class="edge-label" x="402" y="223" text-anchor="start">non, français courant</text>
+    </svg>
+    <dl class="legend">
+      <dt>MOT</dt>
+      <dd>Un jeton du transcript brut, comparé en minuscules sans accents, rendu avec sa graphie d'origine. Un mot garde son trait d'union, l'apostrophe sépare.</dd>
+      <dt><span class="chip progress">connue</span></dt>
+      <dd>Un mot du rapport validé est bien transcrit ; une forme du dictionnaire, canonique, alias, marque ou variante, est reconnue par son premier jeton (<code>ConceptDictionaryService.formsByFirstToken</code>) ; un nombre est une posologie. Aucun n'entre dans une fenêtre.</dd>
+      <dt><span class="chip progress">hors lexique</span></dt>
+      <dd>Le français courant est <code>FrenchLexicon</code>, lu dans <code>data/lexique-francais.txt</code> : les cent cinquante mille formes les plus fréquentes selon wordfreq, produites par <code>scripts/build_lexique_francais.py</code>. Un mot à trait d'union est courant si chacune de ses parties l'est : « est-ce », « rendez-vous » ne sont pas des déformations.</dd>
+      <dt><span class="chip ready">CANDIDATE</span></dt>
+      <dd>Une suite de mots inconnus consécutifs forme une seule fenêtre, coupée par <code>MAX_WINDOW = 3</code> au-delà et arrêtée à la fin de la phrase (<code>SENTENCE_BREAK</code> : point, point-virgule, deux-points, saut de ligne) ; moins de <code>MIN_LETTERS = 4</code> lettres au total, elle est ignorée (« tdf »). Chaque forme entendue n'est soumise qu'une fois par rapport, avec le contexte de sa première occurrence.</dd>
+      <dt><span class="chip lock">JAMAIS</span></dt>
+      <dd>Un mot du français courant n'est jamais candidat, même proche d'un terme du rapport : « vol d'arène » pour Voltarène ne sera pas soumis. Une voie par ressemblance, mesurée et retirée, est racontée ci-dessous.</dd>
+      <dt>contexte</dt>
+      <dd><code>CONTEXT_WORDS = 8</code> mots avant et après la fenêtre, pris dans le transcript ; les autres candidates qui tombent dans ces mots sont remplacées par <code>MASK = [...]</code>, pour que le modèle ne réponde pas sur une voisine.</dd>
+      <dt>liste fermée</dt>
+      <dd>Les termes du rapport validé, dans l'ordre de lecture : d'abord les formes du dictionnaire telles qu'écrites dans le rapport, la plus longue à chaque position (« Score de Glasgow », pas « Glasgow ») ; puis les mots rares, absents du transcript et hors lexique, de quatre lettres au moins (« luméfantrine »), hors mots tout en capitales, les titres de section comme « SYNDROMIQUE » (<code>Token.isHeading</code>). <code>MAX_TERMS = 40</code> au plus. Le modèle devra répondre par l'un d'eux, recopié, ou « aucun ».</dd>
+    </dl>
+  </figure>
+
+  <h2>Sur le corpus de test</h2>
+  <p class="note">
+    Mesure du 28 octobre 2026 sur les trois consultations validées du corpus de test, des
+    dialogues patient-médecin de 3 000 à 9 700 caractères, avec le dictionnaire réel et le
+    lexique embarqué.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 150" role="img" aria-label="Voie mot inconnu : 26 candidates dont 6 vraies déformations. Voie ressemblance, retirée : environ 300 fenêtres de bruit pour une vraie.">
+      <text class="state-name" x="20" y="48" fill="var(--ok)">MOT INCONNU</text>
+      <rect x="200" y="30" width="60" height="26" rx="5" fill="var(--ok-wash)" stroke="var(--ok)"/>
+      <text class="edge-label" x="272" y="48" text-anchor="start">26 candidates : médulaire, douliprane, Dolipone, GAMARAT, céphalie, cérébroïde, et du bruit</text>
+
+      <text class="state-name" x="20" y="108" fill="var(--ink-muted)">RESSEMBLANCE</text>
+      <rect x="200" y="90" width="700" height="26" rx="5" fill="var(--surface-sunk)" stroke="var(--ink-muted)" stroke-dasharray="5 4"/>
+      <text class="edge-label" x="200" y="136" text-anchor="start">environ 300 fenêtres de bruit pour une vraie, « score de gommage » : voie retirée du code</text>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip ready">MOT INCONNU</span></dt>
+      <dd>Les vraies déformations sont là : « médulaire » pour médullaire, « douliprane » et « Dolipone » pour Doliprane, « GAMARAT » pour GAMALATE, « céphalie » pour Céphalée, « cérébroïde » pour cérébral. Le reste, « neurologiste », « réclinait », « monopas », recevra « aucun » ou tombera aux barrières de sélection, sans variante possible sur un mot courant.</dd>
+      <dt>banc du 28 octobre</dt>
+      <dd>Sur les 23 pistes validées du banc réel (157 candidates), <code>gemma4:12b</code> en local répond en 64 s : 31 variantes retenues, toutes justes à la relecture, 111 « aucun », 15 refusées par les barrières. <code>gemma4:26b</code> ne tient pas en entier sur une carte de 16 Go (16,8 Go nécessaires) : Ollama le découpe entre CPU et GPU, et il dégénère en « &lt;unused49&gt; », ce que la sonde et l'interruption de passage attrapent.</dd>
+      <dt><span class="chip lock">RESSEMBLANCE</span></dt>
+      <dd>Une seconde voie soumettait les mots ordinaires proches d'un terme du rapport absent du transcript : mesurée le même jour à environ trois cents fenêtres de bruit (« parce », « accord », « qu'il ») pour une seule vraie déformation, bruit que la garde de sélection, qui mesure la même ressemblance, aurait laissé passer. Elle a été retirée du code.</dd>
+    </dl>
+  </figure>
+
+  <h2>La sélection</h2>
+  <p class="note">
+    Cinq barrières entre la réponse du modèle et le registre, dans
+    <code>AlignmentSelector.select(heard, answer, terms)</code>. La troisième,
+    <code>AsrResemblanceGuard</code>, est réglée sur les 41 couples connus du dictionnaire ; les
+    deux dernières ont été ajoutées le 28 octobre 2026 après le banc, qui montrait des mots courts
+    et des flexions passer le plafond.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 440" role="img" aria-label="Réponse du modèle : aucun ou vide ferme sans rien enregistrer ; recopiée de la liste ; différente de l'entendu ; ressemblance au moins 0,5 ; longueur au moins la moitié du terme ; pas une flexion du même radical ; enregistrée au registre">
+      <defs>
+        <marker id="arr3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="20" y="40" width="150" height="56" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="95" y="64" text-anchor="middle">RÉPONSE</text>
+      <text class="edge-label" x="95" y="84" text-anchor="middle">30 jetons au plus</text>
+
+      <rect class="node" x="230" y="40" width="180" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="320" y="64" text-anchor="middle" fill="var(--dictated)">DANS LA LISTE</text>
+      <text class="edge-label" x="320" y="84" text-anchor="middle">recopiée telle quelle</text>
+
+      <rect class="node" x="470" y="40" width="180" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="560" y="64" text-anchor="middle" fill="var(--dictated)">DIFFÉRENTE</text>
+      <text class="edge-label" x="560" y="84" text-anchor="middle">de la forme entendue</text>
+
+      <rect class="node" x="710" y="40" width="210" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="815" y="64" text-anchor="middle" fill="var(--dictated)">RESSEMBLANCE ≥ 0,5</text>
+      <text class="edge-label" x="815" y="84" text-anchor="middle">AsrResemblanceGuard</text>
+
+      <line class="edge" x1="170" y1="68" x2="228" y2="68" marker-end="url(#arr3)"/>
+      <line class="edge" x1="410" y1="68" x2="468" y2="68" marker-end="url(#arr3)"/>
+      <line class="edge" x1="650" y1="68" x2="708" y2="68" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="710" y="150" width="210" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="815" y="174" text-anchor="middle" fill="var(--dictated)">LONGUEUR ≥ 0,5</text>
+      <text class="edge-label" x="815" y="194" text-anchor="middle">lettres entendues sur lettres du terme</text>
+      <line class="edge" x1="815" y1="96" x2="815" y2="148" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="710" y="250" width="210" height="56" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="815" y="274" text-anchor="middle" fill="var(--dictated)">PAS UNE FLEXION</text>
+      <text class="edge-label" x="815" y="294" text-anchor="middle">radical commun sous 0,7</text>
+      <line class="edge" x1="815" y1="206" x2="815" y2="248" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="710" y="350" width="210" height="56" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="815" y="374" text-anchor="middle" fill="var(--ok)">ENREGISTRÉE</text>
+      <text class="edge-label" x="815" y="394" text-anchor="middle">entendu, terme, consultation, alignement</text>
+      <line class="edge" x1="815" y1="306" x2="815" y2="348" marker-end="url(#arr3)"/>
+
+      <rect class="node" x="20" y="350" width="630" height="56" rx="9" fill="var(--block-wash)"/>
+      <text class="state-name" x="335" y="374" text-anchor="middle" fill="var(--block)">FERMÉ SANS RIEN ENREGISTRER</text>
+      <text class="edge-label" x="335" y="394" text-anchor="middle">« aucun », vide, hors liste, écho, ressemblance trop faible, forme trop courte, flexion</text>
+
+      <path class="edge" d="M95,96 C95,200 95,300 95,348" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="107" y="170" text-anchor="start">« aucun » ou vide</text>
+      <path class="edge" d="M320,96 C320,200 320,300 320,348" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="332" y="170" text-anchor="start">hors liste</text>
+      <path class="edge" d="M560,96 C560,200 560,300 560,348" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="572" y="170" text-anchor="start">écho</text>
+      <path class="edge" d="M710,84 C680,180 660,280 652,362" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="700" y="130" text-anchor="end">sous 0,5</text>
+      <path class="edge" d="M710,190 C690,250 670,320 652,372" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="700" y="235" text-anchor="end">trop courte</text>
+      <path class="edge" d="M710,290 C690,320 670,350 652,382" marker-end="url(#arr3)"/>
+      <text class="edge-label" x="700" y="330" text-anchor="end">flexion</text>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip ready">ENREGISTRÉE</span></dt>
+      <dd>Le terme est rendu tel qu'il est écrit dans la liste, donc dans le rapport, et <code>AlignmentHarvestService</code> l'inscrit au registre avec la forme entendue, la consultation et l'origine « alignement ». Pas de décompte : le seuil d'injection à 1 fait entrer la variante au passage suivant.</dd>
+      <dt><span class="chip lock">dans la liste</span></dt>
+      <dd>Réponse et termes sont comparés accents ôtés, en minuscules, toute ponctuation remplacée par une espace : « « Canal lombaire étroit ». » vaut « Canal lombaire étroit ». Une réponse vide ou « aucun » ferme ; une réponse hors liste, « Dafalgan » ou « Doliprane et Céphalée », est une invention : elle tombe.</dd>
+      <dt><span class="chip lock">différente</span></dt>
+      <dd>Le 26b a renvoyé « vol d'arène » pour « vol d'arène ». Un écho, comparé de la même façon, n'apprend rien : « DOLIPRANE » pour « doliprane » ferme.</dd>
+      <dt><span class="chip lock">ressemblance</span></dt>
+      <dd><code>AsrResemblanceGuard</code>, plafond <code>CAP</code> à 0,5 : la forme entendue doit ressembler à l'une des formes du concept visé, canonique, alias familiers ou marques. La mesure glisse la forme courte le long de la forme longue et garde la fenêtre à la plus petite distance d'édition, sur l'orthographe et sur une réduction phonétique du français (<code>FrenchPhonetics</code>), ce qui tolère un mot avalé ou collé par la transcription. Une forme de moins de trois lettres vaut zéro.</dd>
+      <dt><span class="chip lock">longueur</span></dt>
+      <dd><code>MIN_LENGTH_RATIO = 0.5</code> : les lettres de la forme entendue sur celles du terme, la plus courte sur la plus longue, accents et ponctuation ôtés. La ressemblance glissante compare la forme courte à la meilleure fenêtre de la longue, donc un mot court ressemble à presque tout : « démas » n'est pas « adénopathie », « lombé » n'est pas « Laminectomie », « Mbombo » n'est pas « Lombosciatalgie », « entourne » n'est pas « Incontinence urinaire », « homoglobine cliquée » n'est pas « glyquée ».</dd>
+      <dt><span class="chip lock">flexion</span></dt>
+      <dd><code>INFLECTION_STEM_RATIO = 0.7</code>, la règle du moissonnage par correction : si le radical commun couvre au moins 70 % de la plus courte des deux formes, c'est une flexion ou une graphie du même mot, pas une déformation de la transcription. « recontaminer » n'est pas une déformation de « recontamination », « sphincterien » de « sphinctériens » ; « asthémie » vers « asthénie » passe, le radical commun s'arrêtant à « asth ».</dd>
+      <dt>retenus</dt>
+      <dd>« ambrosia talgis » vers cruralgie, 0,50 ; « vol d'arène » vers diclofénac par sa marque Voltarène, 0,89 ; « mot de tête » vers céphalée par son alias « mal de tête », 0,78 ; « acunel » vers lacunaire, 0,83. Trente des 41 couples connus passent.</dd>
+      <dt>refusés</dt>
+      <dd>« ambrosia talgis » vers cervicalgie, 0,40 ; « allergine 75 » vers pantoprazole, 0,44 ; « suppositoire » vers constipation, 0,33 ; « glaceau » vers lacunaire, 0,43. Toutes les mauvaises réponses observées sur le 26b tombent.</dd>
+      <dt>hors de portée</dt>
+      <dd>Onze couples connus sont des sauts sémantiques qu'aucune ressemblance ne porte : « lucifaline carolin » pour ionogramme, « tdf » pour tomodensitométrie, « hélicoptère civ » pour myélopathie cervicale, « complément de soie » pour duloxétine, « allergine » pour prégabaline. Entrés en juillet par un modèle qui lisait le contexte, ils ne seront pas retrouvés par l'alignement, et le test le fixe.</dd>
+    </dl>
+  </figure>
+
+  <h2>Provenance, revalidation, retour arrière</h2>
+  <p class="note">
+    Avec une injection dès la première consultation, savoir d'où vient chaque variante
+    compte plus que la compter.
+  </p>
+  <figure>
+    <svg viewBox="0 0 940 290" role="img" aria-label="Registre de provenance commun, revalidation qui retraite et remplace, archive horodatée pour le retour arrière, élagage par la trace">
+      <defs>
+        <marker id="arr4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--rule-strong)"/>
+        </marker>
+      </defs>
+
+      <rect class="node" x="30" y="40" width="200" height="60" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="130" y="65" text-anchor="middle" fill="var(--live)">PAR CORRECTION</text>
+      <text class="edge-label" x="130" y="85" text-anchor="middle">CorrectionHarvester</text>
+
+      <rect class="node" x="30" y="190" width="200" height="60" rx="9" fill="var(--live-wash)"/>
+      <text class="state-name" x="130" y="215" text-anchor="middle" fill="var(--live)">PAR ALIGNEMENT</text>
+      <text class="edge-label" x="130" y="235" text-anchor="middle">AlignmentHarvestService</text>
+
+      <rect class="node" x="370" y="110" width="220" height="70" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="480" y="140" text-anchor="middle">REGISTRE</text>
+      <text class="edge-label" x="480" y="160" text-anchor="middle">variante, consultations, origine</text>
+
+      <path class="edge" d="M230,80 C300,100 320,120 368,132" marker-end="url(#arr4)"/>
+      <path class="edge" d="M230,210 C300,190 320,170 368,158" marker-end="url(#arr4)"/>
+
+      <rect class="node" x="710" y="30" width="210" height="60" rx="9" fill="var(--ok-wash)"/>
+      <text class="state-name" x="815" y="55" text-anchor="middle" fill="var(--ok)">ARCHIVE</text>
+      <text class="edge-label" x="815" y="75" text-anchor="middle">overlay horodaté à chaque injection</text>
+
+      <rect class="node edge-dashed" x="710" y="115" width="210" height="60" rx="9" fill="var(--dictated-wash)"/>
+      <text class="state-name" x="815" y="140" text-anchor="middle" fill="var(--dictated)">REVALIDATION</text>
+      <text class="edge-label" x="815" y="160" text-anchor="middle">retraite, remplace, révoque</text>
+
+      <rect class="node edge-dashed" x="710" y="200" width="210" height="60" rx="9" fill="var(--surface-sunk)"/>
+      <text class="state-name" x="815" y="225" text-anchor="middle" fill="var(--ink-muted)">ÉLAGAGE</text>
+      <text class="edge-label" x="815" y="245" text-anchor="middle">par la trace du glossaire</text>
+
+      <path class="edge" d="M590,130 C640,110 660,80 708,65" marker-end="url(#arr4)"/>
+      <line class="edge edge-dashed" x1="590" y1="145" x2="708" y2="145" marker-end="url(#arr4)"/>
+      <path class="edge edge-dashed" d="M590,160 C640,180 660,210 708,225" marker-end="url(#arr4)"/>
+    </svg>
+    <dl class="legend">
+      <dt><span class="chip idle">à construire</span></dt>
+      <dd>La revalidation qui remplace les votes et révoque une variante disparue, et l'élagage.</dd>
+      <dt>REGISTRE</dt>
+      <dd>Un seul fichier <code>~/.cause/asr-harvest.json</code> pour les deux moissonnages : pour chaque terme cible, ses formes entendues et les consultations qui les ont produites. Chaque forme porte son origine, <code>Variant.origine</code> : « correction » par défaut, ce que les registres écrits avant le 28/10/2026 reçoivent à la relecture, ou « alignement ». Il ne compte rien, il dit d'où vient chaque variante.</dd>
+      <dt><span class="chip ready">ARCHIVE</span></dt>
+      <dd>Le retour arrière qui existe aujourd'hui : <code>DictionaryVersionArchiver</code> copie l'overlay appris, horodaté, dans <code>~/.cause/dictionary-versions/</code> à chaque injection. Restaurer une copie annule tout ce qui a été appris après elle.</dd>
+      <dt><span class="chip lock">REVALIDATION</span></dt>
+      <dd>Un médecin plus expérimenté revalide un rapport déjà traité : l'empreinte change et la consultation est retraitée, c'est fait. Ce qui manque : ses anciennes paires restent au registre au lieu d'être remplacées, et une variante qu'elle ne produit plus n'est pas révoquée. À vérifier au passage que le registre par correction remplace de la même façon.</dd>
+      <dt>ÉLAGAGE</dt>
+      <dd>La trace <code>cause-glossaire.log</code> dit, pour chaque génération, quels candidats ont été retenus. Une variante apprise qui ne sert jamais, ou qui tire à faux, se lit là, et c'est là que se décidera son retrait.</dd>
+    </dl>
+  </figure>
+</main>
+</body>
+</html>
